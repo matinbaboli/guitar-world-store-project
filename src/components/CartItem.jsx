@@ -3,6 +3,7 @@ import { Box, Button, IconButton, Stack, Typography } from "@mui/material"
 import InteractiveCounter from "./InteractiveCounter"
 import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, generalBackgroundColor, darkBackgroundColor} from "../theme"
 import DeleteIcon from "../../public/delete-icon.svg?react"
+import LinkModified from "./LinkModified.jsx"
 
 
 const CartItem = () => {
@@ -49,9 +50,11 @@ const CartItem = () => {
                             $9.99
                         </Typography>
                     </Box>
-                    <Button sx={{
-                        color: secondaryColorLight
-                    }}>view product</Button>
+                    <LinkModified to="ProductDetails">
+                        <Button sx={{
+                            color: secondaryColorLight
+                        }}>view product</Button>
+                    </LinkModified>
                 </Box>
             </Stack>
             <IconButton>

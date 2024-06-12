@@ -9,6 +9,7 @@ import {
 import SectionContainer from "../components/SectionContainer"
 import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, generalBackgroundColor, darkBackgroundColor} from "../theme"
 import CartItem from "../components/CartItem"
+import LinkModified from "../components/LinkModified"
 
 const Cart = () => {
     return (
@@ -39,8 +40,10 @@ const Cart = () => {
                 <Typography variant="h6">$100</Typography>
             </Stack>
             <Stack direction={{xs: "column", md: "row-reverse"}} gap={2} mt="15px">
-                <Button variant="contained">Checkout</Button>
-                <Button variant="outlined">clear cart</Button>
+                <LinkModified to="Checkout">
+                    <Button variant="contained">Checkout</Button>
+                </LinkModified>
+                    <Button variant="outlined">clear cart</Button>
             </Stack>
             </Box> 
         </SectionContainer>

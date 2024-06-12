@@ -4,7 +4,7 @@ import PlusIcon from "../../public/plus-icon.svg?react"
 import MinusIcon from "../../public/minus-icon.svg?react"
 import {secondaryColor} from "../theme"
 
-const InteractiveCounter = () => {
+const InteractiveCounter = ({label, roundCorners}) => {
     const [counter, setCounter] = useState(0)
     return (
         <Box 
@@ -14,9 +14,22 @@ const InteractiveCounter = () => {
             sx={{
                 background: secondaryColor,
                 color: "white",
-                paddingBlock: "5px"
+                paddingBlock: "5px",
+                borderRadius: roundCorners && "5px"
             }}
         >
+            {
+            label && 
+            <Typography 
+                variant="h5"
+                letterSpacing="2px"
+                pl="10px"
+                mr="20px"
+            >
+                {label}
+            </Typography>
+            }
+
             <IconButton onClick={() => setCounter(counter - 1)}>
                 <MinusIcon style={{width: "15px"}}/>
             </IconButton>

@@ -48,7 +48,7 @@ const Footer = ({windowWidth}) => {
                         <Typography align="center" variant="h6">
                             Subscribe to our news letter
                         </Typography>
-                        <Stack direction={{xs:"column", sm:"row"}} gap="10px" mt="20px" justifyContent="center" alignItems="start" >
+                        <Stack direction={{xs:"column", sm:"row"}} gap="10px" mt="20px" justifyContent="center" alignItems={{xs: "start" , sm: "stretch"}} >
                             <TextField id="outlined-basic" label="Your Email" variant="filled" size="small"
                             sx={{
                                 background: "white",

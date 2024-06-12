@@ -5,6 +5,7 @@ import Homepage from "./pages/homepage"
 import Catalog from "./pages/Catalog"
 import Cart from "./pages/Cart"
 import ProductDetails from "./pages/ProductDetails"
+import Checkout from "./pages/Checkout"
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
                 <Route path="Catalog" element={<Catalog windowWidth={windowWidth}/>}/>
                 <Route path="Cart" element={<Cart windowWidth={windowWidth}/>}/>
                 <Route path=":page?/ProductDetails" element={<ProductDetails windowWidth={windowWidth}/>}/>
+                <Route path="Cart/Checkout" element={<Checkout windowWidth={windowWidth}/>}/>
             </Route>
         </Routes>
     </BrowserRouter>
