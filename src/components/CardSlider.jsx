@@ -18,14 +18,14 @@ const CardSlider = ({windowWidth, darkBackground}) => {
 // also fix the timing of the interval for the slider when effected by the buttons
     let cardWidth = (windowWidth > 1200 && 335) || 300
     let getInTurnTransformX = (windowWidth > 1200 && 83) || (windowWidth > 900 && 75) || (windowWidth > 600 && 84) || 64
-    let slideDuration = 1000
+    let slideDuration = 600
     let comeInFromBackPx = (windowWidth > 1200 && -302) || (windowWidth > 900 && 1) || (windowWidth > 600 && -218) || -238
 
     const selectNodeAndAddClass =  (nodeIndex, selectedClass) => {
-        ref.current.children.item(nodeIndex).firstChild.classList.add(selectedClass)
+        ref.current.children.item(nodeIndex).firstChild.firstChild.classList.add(selectedClass)
         // console.log(comment)
         setTimeout(() => {    
-            ref.current.children.item(nodeIndex).firstChild.classList.remove(selectedClass) 
+            ref.current.children.item(nodeIndex).firstChild.firstChild.classList.remove(selectedClass) 
         }, slideDuration) 
     }
 

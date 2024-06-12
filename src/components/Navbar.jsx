@@ -10,9 +10,9 @@ import {
      ListItem,
      ListItemButton,
      ListItemText,
-     Link,
      Button, } from "@mui/material"
 import {darkBackgroundColor} from "../theme.jsx"
+import LinkModified from "./LinkModified.jsx"
 
 
 // ICONS
@@ -56,17 +56,17 @@ const toggleMenu = (newOpen) => {
                     height: "100%"
                 }}
             >
-                <Link href="ggg" sx={{height: 50}}>
+                <LinkModified to="Home" sx={{height: 50}}>
                     <Box
                     component="img"
                     sx={{ height: {xs: 55, md: 70}, width: {xs: 120, md: 140} }}
                     alt="Logo"
                     src={Logo}
                     />            
-                </Link>
+                </LinkModified>
                 {windowWidth > 900 ?
                     <Box>
-                        {['Home', 'Products', 'About Us', 'Wishlist'].map(item => {
+                        {['Home', 'Catalog', 'About Us', 'Wishlist'].map(item => {
                             return <Button sx={{color: "white",
                                 ":hover": {
                                     backGroundColor: "none",
@@ -74,23 +74,28 @@ const toggleMenu = (newOpen) => {
                                 },
                                 backGroundColor: "none"
                             }}>
-                                {item}
+                                <LinkModified to={item}>
+                                    {item}
+                                </LinkModified>
                             </Button>
         
                         })}
-
-                        <IconButton sx={{ml: 8}} aria-label="menu" size="large">
-                            <CartIcon />
-                        </IconButton>
+                        <LinkModified to="Cart">
+                            <IconButton sx={{ml: 8}} aria-label="menu" size="large">
+                                <CartIcon />
+                            </IconButton>
+                        </LinkModified>
                         <IconButton aria-label="menu" size="large">
                             <ProfileIcon />
                         </IconButton>
                     </Box>               
                     :
                     <Box>
-                        <IconButton sx={{mr: 2}} aria-label="menu" size="large">
-                            <CartIcon />
-                        </IconButton>
+                        <LinkModified to="Cart">
+                            <IconButton sx={{mr: 2}} aria-label="menu" size="large">
+                                <CartIcon />
+                            </IconButton>                        
+                        </LinkModified>
                         <IconButton aria-label="menu" size="large" onClick={() => toggleMenu(true)}>
                             <MenuIcon />
                         </IconButton>
@@ -112,20 +117,22 @@ const toggleMenu = (newOpen) => {
                     <CloseIcon />
                 </IconButton>
                 <List>
-                {['Profile'].map((text) => (
-                <ListItem key={text} disablePadding>
-                    <ListItemButton>
-                        <ListItemText primary={text} />
-                    </ListItemButton>
-                </ListItem>
-                ))}
+                    <ListItem key="Profile" disablePadding>
+                        <ListItemButton>
+                            <LinkModified to="Profile">
+                                <ListItemText primary="Profile" />
+                            </LinkModified>
+                        </ListItemButton>
+                    </ListItem>
                 </List>
                 <Divider variant="middle" sx={{bgcolor: "white"}}/>
                 <List>
-                {['Home', 'Products', 'About Us', 'Wishlist'].map((text) => (
+                {['Home', 'Catalog', 'About Us', 'Wishlist'].map((text) => (
                 <ListItem key={text} disablePadding>
-                    <ListItemButton>               
-                        <ListItemText primary={text} />
+                    <ListItemButton>
+                        <LinkModified to={text}>
+                            <ListItemText primary={text} />
+                        </LinkModified>               
                     </ListItemButton>
                 </ListItem>
                 ))}

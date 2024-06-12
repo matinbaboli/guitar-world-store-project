@@ -15,7 +15,7 @@ import {
     colors,
  } from "@mui/material"
 import Navbar from "../components/Navbar"
-import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight} from "../theme"
+import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, generalBackgroundColor} from "../theme"
 import SectionContainer from "../components/SectionContainer"
 import CardCustomized from "../components/Card"
 import Value from "../components/Value"
@@ -25,8 +25,8 @@ import CustomerReview from "../components/CustomerReview"
 import RightArrow from "../../public/right-arrow-icon.svg?react"
 import LeftArrow from "../../public/left-arrow-icon.svg?react"
 import Diamond from "../../public/diamond-icon.svg?react"
+import Footer from "../components/Footer"
 
-const generalBackgroundColor = "#FAF6F4"
 // add useContext and subtract the nav height dynamically
 
 
@@ -34,7 +34,6 @@ const generalBackgroundColor = "#FAF6F4"
 
 const Homepage = ({windowWidth}) => {
     return <>
-    <Navbar windowWidth={windowWidth}/>
     <SectionContainer hero windowWidth={windowWidth}>            
         <Box  sx={{
                     position: "absolute",
@@ -273,12 +272,26 @@ const Homepage = ({windowWidth}) => {
                 background: `linear-gradient(to right, ${primaryColorLight} -10%, rgba(0, 0, 0, 0) 3% 97%, ${primaryColorLight} 120%)`
             }}
             ></Box>
-            <Typography variant="h2">
+            <Typography align="center" variant="h2" marginBlock="50px">
                 Customer Reviews
             </Typography>
-
-            <CustomerReview/>
-
+            <Grid container justifyContent="start" spacing={4} mb="50px">
+                <Grid item sm={6}>
+                    <CustomerReview/>
+                </Grid>
+                <Grid item sm={6}>
+                    <CustomerReview/>
+                </Grid>
+                <Grid item sm={6} md={4}>
+                    <CustomerReview/>
+                </Grid>
+                <Grid item sm={6} md={4}>
+                    <CustomerReview/>
+                </Grid>
+                <Grid item sm={6} md={4}>
+                    <CustomerReview/>
+                </Grid>
+            </Grid>
     </SectionContainer>
 </>
 }

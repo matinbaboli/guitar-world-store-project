@@ -7,12 +7,15 @@ export const secondaryColorLight = "#6148C7"
 export const accentColor = "#3D944E"
 export const accentColorLight = "#83ED98"
 export const darkBackgroundColor = "#333333"
+export const generalBackgroundColor = "#FAF6F4"
+
 
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: primaryColor
+            main: primaryColor,
+            light: primaryColorLight
         },
         secondary: {
             main: secondaryColorLight
@@ -20,7 +23,15 @@ const theme = createTheme({
         info: {
             main: accentColor
         },
+    },
+    typography: {
+        h2: {
+            fontWeight: 100,
+            letterSpacing: "2px"
+        }
     }
 })
 
 export default responsiveFontSizes(theme)
+
+// might be better to remove hover effect for iconbuttons

@@ -8,11 +8,11 @@ import {
     CardContent
  } from "@mui/material"
  import {primaryColor, secondaryColor, secondaryColorLight} from "../theme"
+ import LinkModified from "./LinkModified.jsx"
 
-// add a outOfTurn (or something else) tag and define some special design for the cards that are not in fucus of the album yet
 
-const CardCustomized = ({outOfTurn, end, start, myClass}) => {
-    return <>
+const CardCustomized = ({outOfTurn, end, start, myClass, small}) => {
+    return <LinkModified to="ProductDetails">
     <Card className={myClass} sx={{ 
                 opacity: (outOfTurn && (start || end) && "70%") || outOfTurn && "0%",
                 position: outOfTurn && "absolute",
@@ -36,10 +36,9 @@ const CardCustomized = ({outOfTurn, end, start, myClass}) => {
                     sx={{
                         position: "relative",
                         border: `1px solid ${secondaryColor}`,
-                        height: {xs: "320px",sm:"320px" ,lg:"350px"},
-                        width: {xs: 300, lg: 335}, 
+                        height: small ? 320 : {xs: "320px",lg:"350px"},
+                        width: small ? {xs: 300, lg: 280}: {xs: 300, lg: 335}, 
                         transform: outOfTurn && "scale(0.85)",
-
                         backgroundPosition: "center",
                         backgroundSize: "120%",
                         borderRadius: "4px",
@@ -77,7 +76,7 @@ const CardCustomized = ({outOfTurn, end, start, myClass}) => {
                     </CardContent>
                 </CardActionArea>
             </Card> 
-        </>
+        </LinkModified>
 }
 
 export default CardCustomized
