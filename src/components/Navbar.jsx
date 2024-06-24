@@ -51,7 +51,7 @@ const toggleMenu = (newOpen) => {
                 container
                 direction="row"
                 justifyContent="space-between"
-                alignContent="center"
+                alignContent="end"
                 sx={{
                     height: "100%"
                 }}
@@ -59,7 +59,7 @@ const toggleMenu = (newOpen) => {
                 <LinkModified to="Home" sx={{height: 50}}>
                     <Box
                     component="img"
-                    sx={{ height: {xs: 55, md: 70}, width: {xs: 120, md: 140} }}
+                    sx={{ height: {xs: 55, md: 70}, width: {xs: 120, md: 140}, transform: "translateY(-5px)" }}
                     alt="Logo"
                     src={Logo}
                     />            
@@ -67,10 +67,25 @@ const toggleMenu = (newOpen) => {
                 {windowWidth > 900 ?
                     <Box>
                         {['Home', 'Catalog', 'About Us', 'Wishlist'].map(item => {
-                            return <Button sx={{color: "white",
+                            return <Button sx={{color: "white", borderRadius: "0px",
+                            position: "relative",
+                                '&::before': {
+                                    content: '""',
+                                    position: "absolute",
+                                    bottom: 0,
+                                    width: "30px",
+                                    height: "1px",
+                                    opacity: 0,
+                                    background: "white",
+                                    transition: "opacity 0.2s ease-in-out",
+                                },
                                 ":hover": {
                                     backGroundColor: "none",
-                                    borderBottom: "1px solid white"
+                                    // borderBottom: "1px solid white",
+                                    '&::before': {
+                                        opacity: 1,
+                                    }
+
                                 },
                                 backGroundColor: "none"
                             }}>

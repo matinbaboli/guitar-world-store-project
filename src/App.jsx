@@ -6,6 +6,8 @@ import Catalog from "./pages/Catalog"
 import Cart from "./pages/Cart"
 import ProductDetails from "./pages/ProductDetails"
 import Checkout from "./pages/Checkout"
+import AboutUs from "./pages/AboutUs"
+import Wishlist from "./pages/Wishlist"
 
 
 const App = () => {
@@ -23,6 +25,8 @@ const App = () => {
                 <Route path="Home?" element={<Homepage windowWidth={windowWidth}/>}/>
                 <Route path="Catalog" element={<Catalog windowWidth={windowWidth}/>}/>
                 <Route path="Cart" element={<Cart windowWidth={windowWidth}/>}/>
+                <Route path=":page?/About Us" element={<AboutUs windowWidth={windowWidth}/>}/>
+                <Route path="Wishlist" element={<Wishlist windowWidth={windowWidth}/>}/>
                 <Route path=":page?/ProductDetails" element={<ProductDetails windowWidth={windowWidth}/>}/>
                 <Route path="Cart/Checkout" element={<Checkout windowWidth={windowWidth}/>}/>
             </Route>

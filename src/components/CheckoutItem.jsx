@@ -20,24 +20,26 @@ const CheckoutItem = () => {
                     component="img"
                     alt="item-picture"
                     src="../../public/images/guitar-pic.jpg"
-                    sx={{width: {xs: "100px", sm: "150px", md:"180px"},}}
+                    sx={{width: {xs: "100px", sm: "130px", md:"100px"},}}
                     >
                 </Box>
             </Badge>
-            <Stack>
-                <Typography variant="h5">
-                    Guitar
-                </Typography>
-                <Typography variant="subtitle1">
-                    Type: Acoustic
-                </Typography>
-                <Typography variant="subtitle1">
-                    Other Info if needed
-                </Typography>
-            </Stack>
-            <Typography variant="h5" ml="50px">
-                $100
-            </Typography>
+            <Box>
+                <Stack direction="row">
+                    <Typography variant="h5">
+                        Guitar
+                    </Typography>
+                    <Typography variant="h5" ml="50px">
+                        $100
+                    </Typography>
+                </Stack>
+                    <Typography variant="subtitle1">
+                        Type: Acoustic
+                    </Typography>
+                    <Typography variant="subtitle1">
+                        Other Info if needed
+                    </Typography>
+            </Box>
         </Box>
     )
 }

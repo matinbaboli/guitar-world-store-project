@@ -4,25 +4,25 @@ import {
     Box, 
     Typography, 
  } from "@mui/material"
- import {primaryColor, secondaryColor, secondaryColorLight} from "../theme"
+ import {primaryColor, primaryColorLight, primaryColorVeryLight, secondaryColor, secondaryColorLight, secondaryColorVeryLight} from "../theme"
 
 const Value = ({filled}) => {
     return <Box 
     display="flex"
-    flexDirection={filled ? "row-reverse": "row"}
-    justifyContent="space-around"
+    flexDirection="column"
+    justifyContent="center"
     alignItems="center"
-    width={{xs: "300px",sm: "500px", md: "400px",lg: "520px"}}
-    height="140px"
+    width="120px"
+    padding="10px"
     sx={{
-        border: `1px solid ${secondaryColor}`,
+        border: `1px solid ${primaryColorVeryLight}`,
         borderRadius: "5px",
-        background: filled && primaryColor,
+        background: filled && primaryColorLight,
     }}>
-        <Typography variant="h5" color={filled ? "white": secondaryColor}>
+        <Diamond fill={filled ? "white": primaryColorVeryLight} style={{width: "70px",}}/>
+        <Typography variant="h5" color={filled ? "white": primaryColorVeryLight}>
             Value
         </Typography>
-        <Diamond fill={filled ? "white": secondaryColor} style={{width: "80px",}}/>
     </Box>
     
 }

@@ -32,6 +32,7 @@ const theme = createTheme({
             letterSpacing: "2px"
         }
     }
+    
 })
 
 export default responsiveFontSizes(theme)

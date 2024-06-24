@@ -129,12 +129,7 @@ const CardSlider = ({windowWidth, darkBackground}) => {
 
     useEffect(() => {
         const interval = setInterval(
-            cardSliderNext
-
-
-            // add next and back buttons and make them functional
-            // fix the card positions
-        
+            cardSliderNext        
         , 5000)
             return () => clearInterval(interval)
     })

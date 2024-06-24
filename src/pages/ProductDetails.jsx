@@ -37,7 +37,7 @@ const ProductDetails = ({windowWidth}) => {
                 width="100%"
                 sx={{
                     position: {md: "sticky"},
-                    top: 0,
+                    top: "50px",
                     height: "100%",
                     paddingBlock: {md: "20px"},
                     // height: `calc(100vh - ${windowWidth > 900 ? bigNavHeight: smallNavHeight})`,
@@ -106,7 +106,7 @@ const ProductDetails = ({windowWidth}) => {
                 </Box>
                 { windowWidth > 900 &&
                 <Stack direction="row" justifyContent="center" gap={2} mt="20px">
-                    <InteractiveCounter roundCorners label="Amount:"/>
+                    <InteractiveCounter roundCorners label="Quantity:"/>
                     <Button variant="contained">
                         add to cart
                     </Button>
