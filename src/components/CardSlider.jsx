@@ -4,26 +4,41 @@ import CardCustomized from "./Card"
 import RightArrow from "../../public/right-arrow-icon.svg?react"
 import LeftArrow from "../../public/left-arrow-icon.svg?react"
 import {primaryColor, secondaryColor, secondaryColorLight} from "../theme"
+import data from "../data.json"
 
 
 const CardSlider = ({windowWidth, darkBackground}) => {
     const [responsiveThirdCard, setResponsiveThirdCard] = useState();
     const [index, setIndex] = useState(0);
+    const [slidercardsindexes, setSlidercardsindexes] = useState([
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+    ]);
 
     const [activeStep, setActiveStep] = useState(0);// fix when you've added the array for items
 
+
+    
     const ref = useRef()
+
+    let slicedData = data.slice(0, 8)
+
 
 // implement useContext, you need it for darkBackground property and more . . .
 // also fix the timing of the interval for the slider when effected by the buttons
     let cardWidth = (windowWidth > 1200 && 335) || 300
     let getInTurnTransformX = (windowWidth > 1200 && 83) || (windowWidth > 900 && 75) || (windowWidth > 600 && 84) || 64
-    let slideDuration = 600
+    let slideDuration = 1000
     let comeInFromBackPx = (windowWidth > 1200 && -302) || (windowWidth > 900 && 1) || (windowWidth > 600 && -218) || -238
 
     const selectNodeAndAddClass =  (nodeIndex, selectedClass) => {
         ref.current.children.item(nodeIndex).firstChild.firstChild.classList.add(selectedClass)
-        // console.log(comment)
+
         setTimeout(() => {    
             ref.current.children.item(nodeIndex).firstChild.firstChild.classList.remove(selectedClass) 
         }, slideDuration) 
@@ -35,6 +50,19 @@ const CardSlider = ({windowWidth, darkBackground}) => {
         setActiveStep(prevAmount => {
             return prevAmount + 1
         })
+
+        setTimeout(() => {            
+            const newIndexArray = slidercardsindexes.map((item) => {
+                if(item >= slicedData.length - 1) {
+                    return item = 0
+                } else {
+                    return item + 1
+                }
+            })
+            setSlidercardsindexes(newIndexArray)
+        }, slideDuration )
+
+
         
         selectNodeAndAddClass(2, "go-to-back-from-left")
         selectNodeAndAddClass(3, "move-out-left")
@@ -82,6 +110,18 @@ const CardSlider = ({windowWidth, darkBackground}) => {
             return prevAmount - 1
         })
 
+        setTimeout(() => {            
+            const newIndexArray = slidercardsindexes.map((item) => {
+                if(item <= 0) {
+                    return item = slicedData.length - 1
+                } else {
+                    return item - 1
+                }
+            })
+            setSlidercardsindexes(newIndexArray)
+        }, slideDuration - 1 )
+
+
         selectNodeAndAddClass(1, "go-to-left-from-back")
         selectNodeAndAddClass(2, "move-in-left")
         if (windowWidth > 1200){
@@ -105,34 +145,14 @@ const CardSlider = ({windowWidth, darkBackground}) => {
         
     }
 
-    useEffect(() => {
-            if (windowWidth > 1200){
-                setResponsiveThirdCard(
-                <Grid item >
-                    <CardCustomized/>
-                </Grid> )  
-            } else if (windowWidth > 900) {
-                setResponsiveThirdCard(
-                <Grid item >
-                    <CardCustomized outOfTurn end/>
-                </Grid>)
-            } else if (windowWidth < 900) {
-                setResponsiveThirdCard(
-                <Grid item>
-                    <CardCustomized outOfTurn/>
-                </Grid> )
-            }
-
-
-   
-    }, [windowWidth])
 
     useEffect(() => {
-        const interval = setInterval(
+        const sliderAutoNextInterval = setInterval(
             cardSliderNext        
         , 5000)
-            return () => clearInterval(interval)
+            return () => clearInterval(sliderAutoNextInterval)
     })
+
 
 
 
@@ -315,42 +335,56 @@ const CardSlider = ({windowWidth, darkBackground}) => {
                     }
                     `}
             </style>
+
             <Grid  item >
-                <CardCustomized outOfTurn/>
+                <CardCustomized outOfTurn data={slicedData[slidercardsindexes[0]]}/>
             </Grid>
 
             <Grid  item >
-                <CardCustomized outOfTurn start/>
+                <CardCustomized outOfTurn start data={slicedData[slidercardsindexes[1]]}/>
             </Grid>
 
             <Grid item >
-                <CardCustomized/>
+                <CardCustomized data={slicedData[slidercardsindexes[2]]}/>
             </Grid>
 
             {windowWidth > 900 ? 
                 <Grid item >
-                    <CardCustomized/>
+                    <CardCustomized data={slicedData[slidercardsindexes[3]]}/>
                 </Grid>
             :
             <Grid item >
-                <CardCustomized outOfTurn end/>
+                <CardCustomized outOfTurn end data={slicedData[slidercardsindexes[3]]}/>
             </Grid>
             }
 
-            {responsiveThirdCard}
+
+            {windowWidth > 1200 && 
+                <Grid item >
+                    <CardCustomized data={slicedData[slidercardsindexes[4]]}/>
+                </Grid>
+            || windowWidth > 900 && 
+                <Grid item >
+                    <CardCustomized outOfTurn end data={slicedData[slidercardsindexes[4]]}/>
+                </Grid>
+            || windowWidth < 900 && 
+                <Grid item>
+                    <CardCustomized outOfTurn data={slicedData[slidercardsindexes[4]]}/>
+                </Grid>     
+            }
 
             {windowWidth > 900 ?
                 <Grid item >
-                    <CardCustomized outOfTurn end/>
+                    <CardCustomized outOfTurn end data={slicedData[slidercardsindexes[5]]}/>
                 </Grid>
             : 
             <Grid item>
-                    <CardCustomized outOfTurn />
+                    <CardCustomized outOfTurn data={slicedData[slidercardsindexes[5]]}/>
                 </Grid>
             }
 
             <Grid  item >
-                <CardCustomized outOfTurn/>
+                <CardCustomized outOfTurn data={slicedData[slidercardsindexes[6]]}/>
             </Grid>
 
         </Grid>
@@ -374,7 +408,7 @@ const CardSlider = ({windowWidth, darkBackground}) => {
             </IconButton>  
             <MobileStepper
                 variant="dots"
-                steps={6}
+                steps={slicedData.length}
                 position="static"
                 activeStep={activeStep}
                 sx={{ background: "none" }}
@@ -396,3 +430,7 @@ const CardSlider = ({windowWidth, darkBackground}) => {
 }
 
 export default CardSlider
+
+
+
+// there may be a problem with mutating arrays and storing the result in state, learn more about it

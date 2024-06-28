@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext, useEffect, useRef } from "react"
 import {
     Box,
     MobileStepper,
@@ -12,11 +12,33 @@ import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, ge
 import InteractiveCounter from "../components/InteractiveCounter"
 import Comment from "../components/Comment"
 import {smallNavHeight, bigNavHeight} from "../components/Navbar"
+import {context} from "../contextApi"
+import data from "../data.json"
+
+let initialTargetItem = {
+    name: "Guitar",
+    price: 100,
+    type: "Electric",
+    brand: "Fender",
+    image: "../public/images/guitars/1.jpg",
+    description: "The Fender American Professional II Stratocaster offers a mix of classic design and modern enhancements. Known for its bright, clear tones and exceptional playability, this guitar features a deep 'C' neck profile, V-Mod II pickups for more articulation, and a sculpted neck heel for easier access to higher frets. It's a versatile instrument suitable for various genres, from rock to blues.",
+    rating: 4.2
+}
 
 
-
-const ProductDetails = ({windowWidth}) => {
+const ProductDetails = ({windowWidth, }) => {
     const [ratingValue, setRatingValue] = useState(2)
+    const [targetItemFromData, setTargetItemFromData] = useState(initialTargetItem)
+    const {storedProductId} = useContext(context)
+    const {name, price, image, description, rating} = targetItemFromData
+        
+
+    useEffect(() => {
+        let myItem = data.filter((item) => item.id === (storedProductId || Number(localStorage.getItem("productId"))))
+        setTargetItemFromData(myItem[0])
+    },[])
+    
+
     return (
         <Box 
             display="flex" 
@@ -40,6 +62,7 @@ const ProductDetails = ({windowWidth}) => {
                     top: "50px",
                     height: "100%",
                     paddingBlock: {md: "20px"},
+
                     // height: `calc(100vh - ${windowWidth > 900 ? bigNavHeight: smallNavHeight})`,
                 }}
             >
@@ -50,12 +73,14 @@ const ProductDetails = ({windowWidth}) => {
                             position: "relative",
                             width: "100%",
                             height: {xs:"400px", md: "60vh"},
-                            backgroundColor: "gray",
-                            backgroundImage: 'url(public/images/guitar-pic.jpg)',
+                            mb: "20px",
+                            backgroundColor: "white",
+                            backgroundImage: `url(${image})`,
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "contain",
                             backgroundPosition: "center",
                             borderRadius: {md:"10px"},
+                            boxShadow: "0px 5px 20px 1px rgba(0, 0, 0, 0.2)",
                             overflow: "hidden"
                         }}
                     >
@@ -66,7 +91,7 @@ const ProductDetails = ({windowWidth}) => {
                                 bottom: 0,
                                 left: 0,
                                 right: 0,
-                                background: `linear-gradient(to right, ${secondaryColorLight} -10%, rgba(0, 0, 0, 0) 10% 90%, ${secondaryColorLight} 110%)`
+                                background: `linear-gradient(to right, ${secondaryColorLight} -20%, rgba(0, 0, 0, 0) 10% 90%, ${secondaryColorLight} 120%)`
                             }}
                         />
                     </Box>
@@ -129,22 +154,28 @@ const ProductDetails = ({windowWidth}) => {
                 gap={{md: 3}}
                 width="100%"
                 >
-                    <Typography variant="h2" component="h1">Guitar</Typography>
-                    <Typography variant="h4" component="h2" sx={{ color: primaryColor, letterSpacing: "3px"}}>$9.99</Typography>
+                    <Typography variant="h2" component="h1">
+                        {name}
+                    </Typography>
+                    <Typography variant="h4" component="h2" sx={{ color: primaryColor, letterSpacing: "3px"}}>
+                        ${price}
+                    </Typography>
                 </Stack>
                 <Stack direction="row" justifyContent={{xs: "space-between", md: "start"}} gap={{md: 2}} alignItems="center" width="100%" mt="20px" mb="40px">
                     <Rating
                         name="rating"
                         readOnly
-                        value={ratingValue}
-                        onChange={(event, newValue) => {
-                            setRatingValue(newValue);
-                        }}
+                        value={rating}
+                        precision={0.1}
+                        // onChange={(event, newValue) => {
+                        //     setRatingValue(newValue);
+                        // }}
                     />
-                    <Typography variant="h5" sx={{
+                    <Typography variant="h6" sx={{
                         color: "rgba(0, 0, 0, 0.6)"
                     }}>
-                        10 reviews
+                        {`(${rating})  `}
+                        from 10 reviews
                     </Typography>
                 </Stack>
 
@@ -161,7 +192,7 @@ const ProductDetails = ({windowWidth}) => {
                         Description
                     </Typography>
                     <Typography variant="body1">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum laudantium assumenda aperiam officiis illo fugiat quod odio iure magnam corrupti.
+                        {description}
                     </Typography>
                 </Box>   
 

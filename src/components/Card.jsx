@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { 
     Box, 
     Typography, 
@@ -9,11 +9,21 @@ import {
  } from "@mui/material"
  import {primaryColor, secondaryColor, secondaryColorLight} from "../theme"
  import LinkModified from "./LinkModified.jsx"
+import { context } from "../contextApi.jsx"
 
+const CardCustomized = ({outOfTurn, end, start, myClass, small , data}) => {
+    const {setStoredProductId} = useContext(context)
+    const {name, image, price , rating, id} = data
+    let modifiedName = name.substring(0, 18) + "..."
 
-const CardCustomized = ({outOfTurn, end, start, myClass, small}) => {
-    return <LinkModified to="ProductDetails">
-    <Card className={myClass} sx={{ 
+    return <LinkModified to={`ProductDetails/${id}`}>
+    <Card 
+    onClick={() => {
+        localStorage.setItem("productId", id)
+        setStoredProductId(id)
+    }} 
+    className={myClass} 
+            sx={{ 
                 opacity: (outOfTurn && (start || end) && "70%") || outOfTurn && "0%",
                 position: outOfTurn && "absolute",
                 right: end && {xs: "-20px", sm: "40px",md: "0px", lg: "-23px"},
@@ -24,14 +34,11 @@ const CardCustomized = ({outOfTurn, end, start, myClass, small}) => {
                 boxShadow: "none", 
                 background: "none",
                 pointerEvents: outOfTurn ?"none" : "initial",
-                // transition: "all 1s ease-in-out",
                 
-                // transform: outOfTurn && end && "translate(500px, 10px)" ,
                 }}>
                 <CardActionArea>
                     <CardMedia
-                    // component="img"
-                    image="../../public/images/guitar-pic.jpg"
+                    image={image ? image:"../../public/images/guitar-pic.jpg"}
                     alt="guitar-title"
                     sx={{
                         position: "relative",
@@ -40,7 +47,8 @@ const CardCustomized = ({outOfTurn, end, start, myClass, small}) => {
                         width: small ? {xs: 300, lg: 280}: {xs: 300, lg: 335}, 
                         transform: outOfTurn && "scale(0.85)",
                         backgroundPosition: "center",
-                        backgroundSize: "120%",
+                        backgroundSize: "contain",
+                        backgroundColor: "white",
                         borderRadius: "4px",
                         boxShadow:`0px 1px 1px 1px ${secondaryColorLight}, 0px 4px 15px ${secondaryColorLight}`,
                         // transition: "all 0.3s ease-in-out",
@@ -64,13 +72,22 @@ const CardCustomized = ({outOfTurn, end, start, myClass, small}) => {
                             zIndex: "1",
                             m: "10px"
                         }}>
-                            $9.99
+                            {price ? `$${price}`:"$9.99"}
+                        </Typography>
+                        <Typography color={primaryColor} variant="h6" 
+                        sx={{position: "absolute",
+                            right: 0,
+                            bottom: "0",
+                            zIndex: "1",
+                            m: "10px"
+                        }}>
+                            {rating}
                         </Typography>
                     </CardMedia>
                     <CardContent>
                     {!outOfTurn && 
                         <Typography gutterBottom variant="h5" component="div">
-                            Guitar
+                            {name ? modifiedName :"Guitar"}
                         </Typography>
                     }
                     </CardContent>

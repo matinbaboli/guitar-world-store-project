@@ -28,10 +28,8 @@ import LinkModified from "../components/LinkModified"
 
 import RightArrow from "../../public/right-arrow-icon.svg?react"
 import LeftArrow from "../../public/left-arrow-icon.svg?react"
-import Diamond from "../../public/diamond-icon.svg?react"
 import QuestionIcon from "../../public/question-icon.svg?react"
 
-// add useContext and subtract the nav height dynamically
 
 let heroSectionSlides = [
     {
@@ -51,37 +49,35 @@ const slideDurationHalf = slideDuration / 2
 
 
 const Homepage = ({windowWidth}) => {
-    const [heroSliderIndex, setHeroSliderIndex] = useState(1)
+    const [heroSliderIndex, setHeroSliderIndex] = useState(0)
     const {backgroundGradientColor, title, img} = heroSectionSlides[heroSliderIndex]
 
     function handleIncrement(e) {
+
+        const {currentTarget} = e
+
+        currentTarget.setAttribute("disabled", "")
+        setTimeout(() => {    
+            currentTarget.removeAttribute("disabled")
+        }, slideDuration) 
+        nextSlide()
+    }
+
+    function nextSlide() {
         setTimeout(() => {
             if(heroSliderIndex === heroSectionSlides.length - 1) {
                 setHeroSliderIndex(0)
-                console.log("hii")
                 return;
             }
             setHeroSliderIndex(heroSliderIndex => heroSliderIndex + 1 )
 
         }, slideDurationHalf)
-
-        const {currentTarget} = e
-
-        currentTarget.setAttribute("disabled", "")
-        setTimeout(() => {    
-            currentTarget.removeAttribute("disabled")
-        }, slideDuration) 
-
         animate()
+
     }
+
+
     function handleDecrement(e) {
-        setTimeout(() => {
-            if (heroSliderIndex === 0) {
-                setHeroSliderIndex(heroSectionSlides.length - 1)
-                return;
-            }
-            setHeroSliderIndex(heroSliderIndex => heroSliderIndex - 1 )
-        }, slideDurationHalf)
 
         const {currentTarget} = e
 
@@ -89,7 +85,17 @@ const Homepage = ({windowWidth}) => {
         setTimeout(() => {    
             currentTarget.removeAttribute("disabled")
         }, slideDuration) 
+        prevSlide()
+    }
 
+        function prevSlide() {
+            setTimeout(() => {
+                if (heroSliderIndex === 0) {
+                    setHeroSliderIndex(heroSectionSlides.length - 1)
+                    return;
+                }
+                setHeroSliderIndex(heroSliderIndex => heroSliderIndex - 1 )
+            }, slideDurationHalf)
             animate()
         }
 
@@ -117,18 +123,14 @@ const Homepage = ({windowWidth}) => {
                 item.classList.remove("fade-in-out")
             })
         }, slideDuration)
-        console.log(heroBackgroundImage)
 
     }
 
-    // useEffect(() => {
-    //     const interval = setInterval(
-    //         handleIncrement        
-    //     , 5000)
-    //         return () => clearInterval(interval)
-    // })
+    useEffect(() => {
+        const interval = setInterval(nextSlide, 5000)
+            return () => clearInterval(interval)
+    })
 
-    // app breaks when interval and slider btns are operational at the same time
     
     
     return <>
