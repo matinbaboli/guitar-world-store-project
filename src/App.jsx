@@ -11,6 +11,9 @@ import Wishlist from "./pages/Wishlist"
 
 const App = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+
+
     useEffect(() => {
         window.addEventListener("resize", () => setWindowWidth(window.innerWidth))
         return () => window.removeEventListener("resize", () => setWindowWidth(window.innerWidth))
@@ -23,11 +26,11 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Layout windowWidth={windowWidth}/>}>
                 <Route path="Home?" element={<Homepage windowWidth={windowWidth}/>}/>
-                <Route path="Catalog" element={<Catalog windowWidth={windowWidth}/>}/>
+                <Route path=":page?/Catalog" element={<Catalog windowWidth={windowWidth}/>}/>
                 <Route path="Cart" element={<Cart windowWidth={windowWidth}/>}/>
                 <Route path=":page?/About Us" element={<AboutUs windowWidth={windowWidth}/>}/>
                 <Route path="Wishlist" element={<Wishlist windowWidth={windowWidth}/>}/>
-                <Route path=":page?/ProductDetails/:id" element={<ProductDetails windowWidth={windowWidth} />}/>
+                <Route path=":page?/:page?/ProductDetails/:id" element={<ProductDetails windowWidth={windowWidth} />}/>
                 <Route path="Cart/Checkout" element={<Checkout windowWidth={windowWidth}/>}/>
             </Route>
         </Routes>

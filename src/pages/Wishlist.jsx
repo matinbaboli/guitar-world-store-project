@@ -1,56 +1,81 @@
-import React, {useState ,useRef, useEffect} from "react"
+import React, {useState ,useRef, useEffect, useContext} from "react"
 import {
     Box,
     Typography,
-
+    Stack,
+    Button
 } from "@mui/material"
 import SectionContainer from "../components/SectionContainer"
 import WishlistItem from "../components/WishlistItem"
-import {primaryColor, primaryColorLight, primaryColorVeryLight,  secondaryColor, secondaryColorLight, generalBackgroundColor} from "../theme"
+import {primaryColor, primaryColorLight, primaryColorVeryLight,  secondaryColor, secondaryColorLight, generalBackgroundColor, secondaryColorVeryLight} from "../theme"
+import {context} from "../contextApi"
+import LinkModified from "../components/LinkModified"
 
-
-const Wishlist = () => {
+const Wishlist = ({windowWidth}) => {
     const [isPressed, setIsPressed] = useState(false)
     const [cursorX, setCursorX] = useState()
     const slider = useRef()
     const cards = useRef()
+    const {wishlistItems} = useContext(context)
+    const [activateDrag, setActivateDrag] = useState(false)
+
 
     function mousedownHandle(e) {
+        if (!activateDrag) {
+            e.target.style.cursor = "default"
+            return;    
+        };
         setIsPressed(true)
         setCursorX(e.clientX - cards.current.offsetLeft)
         e.target.style.cursor = "grabbing"
     }
 
     function mousemoveHandle(e) {
+        if (!activateDrag) {
+            cards.current.style.left = 0
+            return;    
+        };
         if (!isPressed) return;
         e.preventDefault()
         cards.current.style.left = `${e.clientX - cursorX}px`
         boundSlides()
-        console.log(cards.current.style.left)
     }
 
     function mouseupHandle(e) {
+        if (!activateDrag) {
+            e.target.style.cursor = "default"
+            return;    
+        };        
         setIsPressed(false)
         e.target.style.cursor = "grab"
     }
 
     function boundSlides() {
         const containerRect = slider.current.getBoundingClientRect()
-        const cardsRect = cards.current.getBoundingClientRect()
+        const cardsRect = wishlistItems.length > 0 && cards.current.getBoundingClientRect()    
         if(parseInt(cards.current.style.left) > 0) {
             cards.current.style.left = 0
         } else if (cardsRect.right < containerRect.right) {
             cards.current.style.left = `-${cardsRect.width - containerRect.width}px`
-        }    
+        }  
     }
+    
+    useEffect(() => {
+        const containerRect = slider.current.getBoundingClientRect()
+        const cardsRect = wishlistItems.length > 0 && cards.current.getBoundingClientRect()
+        let areCardsWider = cardsRect.width > containerRect.width
+        // console.log(cardsRect)
 
-    // useEffect(() => {
-    // })
+        setActivateDrag(areCardsWider)
+    }, [windowWidth])
 
     return (
         <SectionContainer hero backgroundColor="#FDE9E4">
-            <Typography marginBlock="60px" align="center" variant="h2" component="h1" color={primaryColor}>
+            <Typography mt="70px" mb="20px" align="center" variant="h3" letterSpacing={3} component="h1" color={primaryColor}>
                 Wishlist
+            </Typography>
+            <Typography variant="body1" mb="20px" letterSpacing={1} color={primaryColor} align="center">
+                Add your favorite products or things you want to buy at a later time here so you don't lose them.
             </Typography>
             <Box
                 display="flex"
@@ -63,9 +88,12 @@ const Wishlist = () => {
             >
                     
                     <Box 
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
                         position="relative"
                         width="100%"
-                        height={{sm:"540px"}}
+                        height={{sm:"570px"}}
                         overflow="auto"
                         borderRight="2px solid black"
                         boxSizing="border-box"
@@ -75,12 +103,13 @@ const Wishlist = () => {
                         onMouseUp={mouseupHandle}
                         sx={{
                             background: "white",
-                            cursor: "grab",
+                            cursor: activateDrag && "grab",
                             
                         }}
                         
                         >
-                            <Box
+                            {wishlistItems.length > 0 ? 
+                                <Box
                                 display="flex"
                                 flexDirection={{xs: "column", sm: "row"}}
                                 alignItems="center"
@@ -89,19 +118,36 @@ const Wishlist = () => {
                                 boxSizing="border-box"
                                 ref={cards}
                                 sx={{
-                                    position:{sm: "absolute"},
+                                    position:{xs: "relative",sm: "absolute"},
+                                    maxWidth: {xs: "350px"},
+                                    width: "100%",
                                     top:0,
-                                    left:0            
+                                    left:0,                                               
                                 }}
                                 >
-                                <WishlistItem/>
-                                <WishlistItem/>
-                                <WishlistItem/>
-                                <WishlistItem/>
-                                <WishlistItem/>
-                                <WishlistItem/>
-                                <WishlistItem/>
-                            </Box>
+                                    {
+                                    wishlistItems.map(item => {
+                                        return <WishlistItem key={item.id} data={item}/>
+                                    })   
+                                    }                                
+                                </Box>  
+                            :
+                                <Stack alignItems="center" gap={4}>
+                                    <Box
+                                    component="img"
+                                    src="../../public/images/empty-wishlist.png"
+                                    width="400px"
+                                    />
+                                    <Typography variant="h6" color="gray">
+                                        There are no items added to the Wishlist yet
+                                    </Typography>
+                                    <LinkModified to="Catalog">
+                                        <Button variant="contained" sx={{bgcolor: primaryColorLight}}>
+                                            Start shopping
+                                        </Button>
+                                    </LinkModified>
+                                </Stack>
+                            }
                     </Box>
                 <Box 
                     width= "20px"

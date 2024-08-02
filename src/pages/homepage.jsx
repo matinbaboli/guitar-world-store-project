@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useContext} from "react"
 import { 
     Container, 
     Box, 
@@ -21,8 +21,10 @@ import CardCustomized from "../components/Card"
 import Value from "../components/Value"
 import CardSlider from "../components/CardSlider"
 import CustomerReview from "../components/CustomerReview"
-import CoreQualities from "../components/CoreQualities"
+import CoreQualitiesHomePageBigScreen from "../components/CoreQualitiesHomePageBigScreen"
+import CoreQuality from "../components/coreQuality"
 import LinkModified from "../components/LinkModified"
+import {context} from "../contextApi"
 
 
 
@@ -31,16 +33,20 @@ import LeftArrow from "../../public/left-arrow-icon.svg?react"
 import QuestionIcon from "../../public/question-icon.svg?react"
 
 
+
+
 let heroSectionSlides = [
     {
         backgroundGradientColor: primaryColor,
         title: "Acoustic Guitars",
         img: "public/images/Acoustic-guitar-representation.png",
+        type: "Acoustic"
     },
     {
         backgroundGradientColor: secondaryColor,
         title: "Electric Guitars",
         img: "public/images/electric-guitarist.jpg",
+        type: "Electric"
     }
 ]
 
@@ -50,7 +56,8 @@ const slideDurationHalf = slideDuration / 2
 
 const Homepage = ({windowWidth}) => {
     const [heroSliderIndex, setHeroSliderIndex] = useState(0)
-    const {backgroundGradientColor, title, img} = heroSectionSlides[heroSliderIndex]
+    const {backgroundGradientColor, title, img, type} = heroSectionSlides[heroSliderIndex]
+    const {setProductTypeFilter, setExtraFilter} = useContext(context)
 
     function handleIncrement(e) {
 
@@ -219,6 +226,7 @@ const Homepage = ({windowWidth}) => {
                     <Stack 
                     direction="row"
                     justifyContent="center"
+                    // alignItems="stretch"
                     spacing={3}
                     marginBlock="20px"
                     >
@@ -226,22 +234,30 @@ const Homepage = ({windowWidth}) => {
                         onClick={handleDecrement}
                         sx={{
                             backgroundColor: primaryColor,
-                            width: "50px",
+                            width: "60px",
                             height: "50px",
-                            pr: "12px",
+                            borderRadius: "22px",            
+                            pr: "13px",
                         }}>
                             <LeftArrow/>
                         </IconButton>  
-                        <Button size="medium" variant="contained" color="secondary">
-                            shop now
-                        </Button>                  
+                        <LinkModified to="Catalog">
+                            <Button onClick={() => setProductTypeFilter(type)} size="medium" variant="contained" color="secondary" 
+                                sx={{
+                                    height: "100%"
+                                }}
+                            >
+                                shop now
+                            </Button>                  
+                        </LinkModified>
                         <IconButton
                         onClick={handleIncrement}
                         sx={{
                             backgroundColor: primaryColor,
-                            width: "50px",
+                            width: "60px",
                             height: "50px",
-                            pl: "12px",
+                            borderRadius: "22px",
+                            pl: "13px",
                         }}>
                             <RightArrow/>
                         </IconButton>  
@@ -283,10 +299,12 @@ const Homepage = ({windowWidth}) => {
             marginBlock="50px"
         >
             <Typography align="center" color="white" marginBlock="10px" variant="h2">Special Offers</Typography>
-            <CardSlider windowWidth={windowWidth}/>
-            <Button variant="outlined" size="large" color="secondary">
-                all offers
-            </Button>
+            <CardSlider windowWidth={windowWidth} dataType="sale"/>
+            <LinkModified to="Catalog">
+                <Button onClick={() => setExtraFilter("SpecialOffers")} variant="outlined" size="large" color="secondary">
+                    all offers
+                </Button>
+            </LinkModified>
         </Box>
     </SectionContainer>
 
@@ -365,7 +383,7 @@ const Homepage = ({windowWidth}) => {
             </Typography>
             <QuestionIcon style={{maxWidth: "50px",}}/>
         </Stack>
-        <Typography variant="body1" fontSize="1.1rem" letterSpacing="1px" lineHeight="35px" mt="50px" ml="100px">
+        <Typography variant="body1" fontSize="1.1rem" letterSpacing="1px" lineHeight="35px" mt="50px" ml={{xs: 0, md:"100px"}}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil quos corrupti, velit eligendi aspernatur temporibus aut, vel reprehenderit sint similique repellat natus molestiae commodi, sequi quaerat autem? Reprehenderit, vitae enim!
         </Typography>
 
@@ -373,18 +391,24 @@ const Homepage = ({windowWidth}) => {
             display="flex"
             justifyContent="end"
             position="relative"
-            gap={30}
-            mt="70px"
+            gap={{sm: 10,md:30}}
+            mt={{ xs: "150px", md:"70px"}}
             mb="130px"
+            pr={{xs: 10, sm: 0}}
             sx={{
                 background: "white",
                 isolation: "isolate",
                 paddingBlock: "10px"
             }}
         >
-            <Typography variant="h5" letterSpacing={3}>
-                WANT TO KNOW MORE?
-            </Typography>
+            {
+                windowWidth > 700 
+                && 
+                <Typography variant="h5" letterSpacing={3}>
+                    WANT TO KNOW MORE?
+                </Typography>
+            }
+            
             <LinkModified to={"About Us"}>
                 <Button variant="contained">
                     learn more
@@ -413,8 +437,15 @@ const Homepage = ({windowWidth}) => {
             >
             </Box>
         </Box>
-
-        <CoreQualities/>
+        {windowWidth > 900 
+        ? 
+            <CoreQualitiesHomePageBigScreen/>
+        :
+            <Stack alignItems="center" gap={3} mb={6}>
+                <CoreQuality vision small/>
+                <CoreQuality mission small/>
+            </Stack>
+        }
         <Box
             position="absolute"
             top={0}
@@ -429,9 +460,7 @@ const Homepage = ({windowWidth}) => {
 
         </Box>
     </SectionContainer>
-    <SectionContainer backgroundColor={primaryColor}>
-
-
+    <SectionContainer backgroundColor={primaryColor} rounded>
         <Box 
             display="flex"
             flexDirection="column"
@@ -441,10 +470,12 @@ const Homepage = ({windowWidth}) => {
             gap={5}
         >
             <Typography  color="white" mb="10px"  variant="h2">For Begginers</Typography>
-            <CardSlider windowWidth={windowWidth} darkBackground/>
-            <Button variant="contained" size="large" color="secondary">
-                all suggestions
-            </Button>
+            <CardSlider windowWidth={windowWidth} darkBackground dataType="begginerFriendly"/>
+            <LinkModified to="Catalog">
+                <Button onClick={() => setExtraFilter("ForBegginers")} variant="contained" size="large" color="secondary">
+                    all suggestions
+                </Button>
+            </LinkModified>
         </Box>
             <Box  
                     component="img"

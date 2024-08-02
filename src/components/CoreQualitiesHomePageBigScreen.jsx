@@ -9,7 +9,7 @@ import TargetIcon from "../../public/target-icon.svg?react"
 import {context} from "../contextApi"
 import { primaryColor, primaryColorLight, secondaryColor, secondaryColorLight } from "../theme"
 
-const CoreQualities = ({title}) => {
+const CoreQualitiesHomePageBigScreen = ({title}) => {
     const [coreQualityHovered, setCoreQualityHovered] = useState()
     const [show, setShow] = useState(false)
 
@@ -87,4 +87,4 @@ const CoreQualities = ({title}) => {
     )
 }
 
-export default CoreQualities
+export default CoreQualitiesHomePageBigScreen

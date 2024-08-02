@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { 
     Box,
     Divider,
@@ -14,9 +14,15 @@ import {
  import {primaryColor, primaryColorLight, secondaryColor, secondaryColorVeryLight, generalBackgroundColor, darkBackgroundColor} from "../theme"
 import SectionContainer from "../components/SectionContainer"
 import CheckoutItem from "../components/CheckoutItem"
+import {context} from "../contextApi"
 
 
 const Checkout = () => {
+    const {shoppingCartItems, subTotalPrice} = useContext(context)
+
+    let shipping = 10
+    const TotalPrice = subTotalPrice + shipping
+
     return (
         <SectionContainer backgroundColor={generalBackgroundColor}>
             <Box 
@@ -41,10 +47,10 @@ const Checkout = () => {
                     sx={{
                         background: secondaryColorVeryLight
                     }}
-                    >
-                    <CheckoutItem/>
-                    <CheckoutItem/>
-                    <CheckoutItem/>
+                >
+                    {shoppingCartItems.map(item => {
+                        return <CheckoutItem key={item.id} data={item}/> 
+                    })}
                     <Divider variant="fullWidth" width="100%" sx={{
                         height: "1px",
                         background: "rgba(0, 0, 0, 0.4)",
@@ -53,27 +59,27 @@ const Checkout = () => {
                     }}/>
                     <Box width="80%">
                         <Stack direction="row" justifyContent="space-between" >
-                            <Typography variant="h6" letterSpacing="1px">
+                            <Typography variant="body1" letterSpacing="1px">
                                 Subtotal 
                             </Typography>
                             <Typography variant="body1" color="GrayText">
-                                $100 
+                                ${subTotalPrice} 
                             </Typography>
                         </Stack>
-                        <Stack direction="row" justifyContent="space-between">
-                            <Typography variant="h6" letterSpacing="1px">
+                        <Stack direction="row" justifyContent="space-between" mt="2px" mb="13px">
+                            <Typography variant="body1" letterSpacing="1px">
                                 Estimated Shipping 
                             </Typography>
                             <Typography variant="body1" color="GrayText">
-                                $100 
+                                ${shipping} 
                             </Typography>
                         </Stack>
-                        <Stack direction="row" justifyContent="space-between" mt="10px">
-                            <Typography variant="h5" color="secondary" letterSpacing="1px">
+                        <Stack direction="row" justifyContent="space-between" >
+                            <Typography variant="h6" color="secondary" letterSpacing="1px">
                                 TOTAL 
                             </Typography>
-                            <Typography variant="h5" color="secondary" letterSpacing="1px">
-                                $100 
+                            <Typography variant="h6" color="secondary" letterSpacing={1.5}>
+                                ${TotalPrice} 
                             </Typography>
                         </Stack>
                     </Box>

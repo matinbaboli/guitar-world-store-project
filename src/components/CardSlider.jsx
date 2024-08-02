@@ -1,36 +1,23 @@
 import React, {useState, useEffect, useRef} from "react"
-import {Grid, IconButton, MobileStepper, Box } from "@mui/material"
+import {Grid, IconButton, MobileStepper, Box, Typography } from "@mui/material"
 import CardCustomized from "./Card"
 import RightArrow from "../../public/right-arrow-icon.svg?react"
 import LeftArrow from "../../public/left-arrow-icon.svg?react"
-import {primaryColor, secondaryColor, secondaryColorLight} from "../theme"
+import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, primaryColorVeryLight, secondaryColorVeryLight} from "../theme"
 import data from "../data.json"
 
 
-const CardSlider = ({windowWidth, darkBackground}) => {
-    const [responsiveThirdCard, setResponsiveThirdCard] = useState();
-    const [index, setIndex] = useState(0);
-    const [slidercardsindexes, setSlidercardsindexes] = useState([
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-    ]);
-
-    const [activeStep, setActiveStep] = useState(0);// fix when you've added the array for items
+const CardSlider = ({windowWidth, darkBackground, dataType}) => {
+    const [slidercardsindexes, setSlidercardsindexes] = useState([1, 1, 2, 3, 4, 5, 6]);
+    const [activeStep, setActiveStep] = useState(0);
+    const [sliderDataFiltered , setSliderDataFiltered] = useState(data.slice(0, 8))
 
 
     
     const ref = useRef()
 
-    let slicedData = data.slice(0, 8)
+// let sliderDataFiltered = data.slice(0, 8)
 
-
-// implement useContext, you need it for darkBackground property and more . . .
-// also fix the timing of the interval for the slider when effected by the buttons
     let cardWidth = (windowWidth > 1200 && 335) || 300
     let getInTurnTransformX = (windowWidth > 1200 && 83) || (windowWidth > 900 && 75) || (windowWidth > 600 && 84) || 64
     let slideDuration = 1000
@@ -46,21 +33,46 @@ const CardSlider = ({windowWidth, darkBackground}) => {
 
 
     function cardSliderNext() {
+        let start = Date.now()
 
         setActiveStep(prevAmount => {
-            return prevAmount + 1
+            if (prevAmount === sliderDataFiltered.length - 1) {
+                return 0
+            } else {
+                return prevAmount + 1
+            }
         })
+        let newIndexArray = [...slidercardsindexes].map((item) => {
+            if(item >= sliderDataFiltered.length - 1) {
+                return item = 0
+            } else {
+                return item + 1
+            }
+        }) 
+        
+        // newIndexArray.map((item) => {
+            //     if(item >= sliderDataFiltered.length - 1) {
+        //         return item = 0
+        //     } else {
+            //         return item + 1
+            //     }
+            // })
 
-        setTimeout(() => {            
-            const newIndexArray = slidercardsindexes.map((item) => {
-                if(item >= slicedData.length - 1) {
-                    return item = 0
-                } else {
-                    return item + 1
-                }
-            })
+        setTimeout(() => {  
+            let end = Date.now()
             setSlidercardsindexes(newIndexArray)
-        }, slideDuration )
+            // console.log(end - (start + slideDuration))
+        }, slideDuration)
+        // setTimeout(() => {            
+        //     const newIndexArray = slidercardsindexes.map((item) => {
+        //         if(item >= sliderDataFiltered.length - 1) {
+        //             return item = 0
+        //         } else {
+        //             return item + 1
+        //         }
+        //     })
+        //     setSlidercardsindexes(newIndexArray)
+        // }, slideDuration )
 
 
         
@@ -107,19 +119,23 @@ const CardSlider = ({windowWidth, darkBackground}) => {
     function cardSliderPrev() {
 
         setActiveStep(prevAmount => {
-            return prevAmount - 1
+            if(prevAmount === 0) {
+                return sliderDataFiltered.length - 1
+            } else {
+                return prevAmount - 1
+            }
         })
 
         setTimeout(() => {            
             const newIndexArray = slidercardsindexes.map((item) => {
                 if(item <= 0) {
-                    return item = slicedData.length - 1
+                    return item = sliderDataFiltered.length - 1
                 } else {
                     return item - 1
                 }
             })
             setSlidercardsindexes(newIndexArray)
-        }, slideDuration - 1 )
+        }, slideDuration)
 
 
         selectNodeAndAddClass(1, "go-to-left-from-back")
@@ -150,8 +166,30 @@ const CardSlider = ({windowWidth, darkBackground}) => {
         const sliderAutoNextInterval = setInterval(
             cardSliderNext        
         , 5000)
-            return () => clearInterval(sliderAutoNextInterval)
+
+        return () => clearInterval(sliderAutoNextInterval)
     })
+
+    useEffect(() => {
+        let onsaleItems = data.filter(item => item.sale)
+        let begginerFriendlyItems = data.filter(item => item.begginerFriendly)
+        let sliderDataConditionBased = dataType === "sale" ? onsaleItems: begginerFriendlyItems
+
+        setSliderDataFiltered(sliderDataConditionBased)  
+
+
+
+        let copiedSlidercardsindexes = [...slidercardsindexes]
+        let counter = -1
+        let newArray = copiedSlidercardsindexes.map(item => {
+            if (counter >= sliderDataConditionBased.length - 1) {
+                return counter = 0
+            } else {
+                return counter = counter + 1
+            }
+        })
+        setSlidercardsindexes(newArray)
+    }, [])
 
 
 
@@ -335,56 +373,55 @@ const CardSlider = ({windowWidth, darkBackground}) => {
                     }
                     `}
             </style>
-
             <Grid  item >
-                <CardCustomized outOfTurn data={slicedData[slidercardsindexes[0]]}/>
+                <CardCustomized darkBackground={darkBackground} outOfTurn data={sliderDataFiltered[slidercardsindexes[0]]}/>
             </Grid>
 
             <Grid  item >
-                <CardCustomized outOfTurn start data={slicedData[slidercardsindexes[1]]}/>
+                <CardCustomized darkBackground={darkBackground} outOfTurn start data={sliderDataFiltered[slidercardsindexes[1]]}/>
             </Grid>
 
             <Grid item >
-                <CardCustomized data={slicedData[slidercardsindexes[2]]}/>
+                <CardCustomized darkBackground={darkBackground} data={sliderDataFiltered[slidercardsindexes[2]]}/>
             </Grid>
 
             {windowWidth > 900 ? 
                 <Grid item >
-                    <CardCustomized data={slicedData[slidercardsindexes[3]]}/>
+                    <CardCustomized darkBackground={darkBackground} data={sliderDataFiltered[slidercardsindexes[3]]}/>
                 </Grid>
             :
             <Grid item >
-                <CardCustomized outOfTurn end data={slicedData[slidercardsindexes[3]]}/>
+                <CardCustomized darkBackground={darkBackground} outOfTurn end data={sliderDataFiltered[slidercardsindexes[3]]}/>
             </Grid>
             }
 
 
             {windowWidth > 1200 && 
                 <Grid item >
-                    <CardCustomized data={slicedData[slidercardsindexes[4]]}/>
+                    <CardCustomized darkBackground={darkBackground} data={sliderDataFiltered[slidercardsindexes[4]]}/>
                 </Grid>
             || windowWidth > 900 && 
                 <Grid item >
-                    <CardCustomized outOfTurn end data={slicedData[slidercardsindexes[4]]}/>
+                    <CardCustomized darkBackground={darkBackground} outOfTurn end data={sliderDataFiltered[slidercardsindexes[4]]}/>
                 </Grid>
             || windowWidth < 900 && 
                 <Grid item>
-                    <CardCustomized outOfTurn data={slicedData[slidercardsindexes[4]]}/>
+                    <CardCustomized darkBackground={darkBackground} outOfTurn data={sliderDataFiltered[slidercardsindexes[4]]}/>
                 </Grid>     
             }
 
             {windowWidth > 900 ?
                 <Grid item >
-                    <CardCustomized outOfTurn end data={slicedData[slidercardsindexes[5]]}/>
+                    <CardCustomized darkBackground={darkBackground} outOfTurn end data={sliderDataFiltered[slidercardsindexes[5]]}/>
                 </Grid>
             : 
             <Grid item>
-                    <CardCustomized outOfTurn data={slicedData[slidercardsindexes[5]]}/>
+                    <CardCustomized darkBackground={darkBackground} outOfTurn data={sliderDataFiltered[slidercardsindexes[5]]}/>
                 </Grid>
             }
 
             <Grid  item >
-                <CardCustomized outOfTurn data={slicedData[slidercardsindexes[6]]}/>
+                <CardCustomized darkBackground={darkBackground} outOfTurn data={sliderDataFiltered[slidercardsindexes[6]]}/>
             </Grid>
 
         </Grid>
@@ -399,24 +436,31 @@ const CardSlider = ({windowWidth, darkBackground}) => {
             pb="10px"
             >
             <IconButton onClick={handlePrevBtnClick} sx={{
-                backgroundColor: primaryColor,
-                width: "50px",
+                backgroundColor: darkBackground ? primaryColorLight: primaryColor,
+                width: "60px",
                 height: "50px",
+                borderRadius: "30px",
                 pr: "12px",
             }}>
                 <LeftArrow/>
             </IconButton>  
             <MobileStepper
                 variant="dots"
-                steps={slicedData.length}
+                steps={sliderDataFiltered.length}
                 position="static"
                 activeStep={activeStep}
-                sx={{ background: "none" }}
+                sx={{ 
+                    background: "none", 
+                    "&& .MuiMobileStepper-dotActive": {
+                        background: darkBackground ? primaryColorVeryLight: primaryColor
+                    }
+                 }}
                 />
             <IconButton onClick={handleNextBtnClick} sx={{
-                backgroundColor: primaryColor,
-                width: "50px",
+                backgroundColor: darkBackground ? secondaryColorLight: primaryColor,
+                width: "60px",
                 height: "50px",
+                borderRadius: "30px",
                 pl: "12px",
             }}>
                 <RightArrow/>

@@ -7,7 +7,13 @@
         "brand": "Fender",
         "image": "../../public/images/guitars/1.jpg",
         "description": "The Fender American Professional II Stratocaster offers a mix of classic design and modern enhancements. Known for its bright, clear tones and exceptional playability, this guitar features a deep 'C' neck profile, V-Mod II pickups for more articulation, and a sculpted neck heel for easier access to higher frets. It's a versatile instrument suitable for various genres, from rock to blues.",
-        "rating": 4.8
+        "rating": 4.8,
+        "sale": "30%",
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
     },
     {
         "id": 2,
@@ -17,7 +23,14 @@
         "brand": "Gibson",
         "image": "../../public/images/guitars/2.jpg",
         "description": "The Gibson Les Paul Standard '50s brings back the iconic look and sound of the original Les Paul models. Featuring a solid mahogany body with a maple top, it delivers a rich, full sound with incredible sustain. The '50s-style rounded neck and BurstBucker pickups offer vintage tones and superior playability, making it a favorite among rock and blues guitarists.",
-        "rating": 4.9
+        "rating": 4.9,
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 3,
@@ -27,7 +40,13 @@
         "brand": "Martin",
         "image": "../../public/images/guitars/3.jpg",
         "description": "The Martin D-28 is a legendary acoustic guitar known for its powerful projection and balanced tone. Crafted with a solid Sitka spruce top and East Indian rosewood back and sides, it offers deep bass, clear trebles, and a rich midrange. Its traditional dreadnought body shape makes it ideal for both strumming and fingerpicking, ensuring it remains a favorite for decades.",
-        "rating": 4.9
+        "rating": 4.9,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 4,
@@ -37,7 +56,13 @@
         "brand": "Taylor",
         "image": "../../public/images/guitars/4.jpg",
         "description": "The Taylor 814ce is a high-end acoustic-electric guitar that excels in both tone and playability. With its solid Sitka spruce top and Indian rosewood back and sides, it produces a balanced, articulate sound with a broad dynamic range. The Grand Auditorium body shape and Taylor's patented V-Class bracing enhance volume and sustain, while the Expression System 2 electronics provide natural amplified tones.",
-        "rating": 4.8
+        "rating": 4.8,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 5,
@@ -47,7 +72,14 @@
         "brand": "Yamaha",
         "image": "../../public/images/guitars/5.jpg",
         "description": "The Yamaha FG800 is an affordable acoustic guitar that offers exceptional value for beginners and seasoned players alike. Its solid spruce top combined with nato/okume back and sides produce a warm, rich tone with excellent projection. The traditional dreadnought body provides a comfortable playing experience, making it a great choice for various playing styles.",
-        "rating": 4.7
+        "rating": 4.7,
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 6,
@@ -57,7 +89,13 @@
         "brand": "PRS",
         "image": "../../public/images/guitars/6.jpg",
         "description": "The PRS Custom 24 is a premier electric guitar renowned for its versatility and stunning craftsmanship. Featuring a carved figured maple top, mahogany back, and PRS's patented tremolo system, it delivers exceptional tone and sustain. The 85/15 pickups provide clarity and power, while the 24-fret neck with bird inlays ensures smooth playability across all genres.",
-        "rating": 4.8
+        "rating": 4.8,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 7,
@@ -67,7 +105,14 @@
         "brand": "Ibanez",
         "image": "../../public/images/guitars/7.jpg",
         "description": "The Ibanez RG550 is a high-performance electric guitar favored by rock and metal musicians for its speed and precision. Its super-thin Wizard neck, Edge tremolo system, and V7/S1/V8 pickups offer unparalleled playability and versatile tonal options. The RG550's sleek design and aggressive sound make it a staple in the world of high-octane guitar playing.",
-        "rating": 4.7
+        "rating": 4.7,
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 8,
@@ -77,7 +122,13 @@
         "brand": "Gibson",
         "image": "../../public/images/guitars/8.jpg",
         "description": "The Gibson J-45, often referred to as the 'workhorse,' is an acoustic guitar known for its warm, expressive sound and robust build. With a solid Sitka spruce top and mahogany back and sides, it produces a rich, full tone perfect for various playing styles. Its round-shoulder design and advanced response neck ensure comfortable playability, making it a favorite for decades.",
-        "rating": 4.8
+        "rating": 4.8,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 9,
@@ -87,7 +138,15 @@
         "brand": "Epiphone",
         "image": "../../public/images/guitars/9.jpg",
         "description": "The Epiphone Dot is a budget-friendly semi-hollow electric guitar that offers vintage tones and modern reliability. Modeled after the classic Gibson ES-335, it features a laminated maple body and Alnico Classic humbuckers for a warm, rich sound. The Dot is perfect for blues, jazz, and rock, providing excellent value and performance.",
-        "rating": 4.6
+        "rating": 4.6,
+        "sale": "15%",
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 10,
@@ -97,7 +156,14 @@
         "brand": "Gretsch",
         "image": "../../public/images/guitars/10.jpg",
         "description": "The Gretsch G2622 Streamliner is a stylish semi-hollow electric guitar known for its dynamic tone and retro vibe. With its Broad'Tron BT-2S pickups and center block construction, it offers powerful, articulate sound with reduced feedback. The thin 'U' neck and vintage styling make it a joy to play and a visual standout on stage.",
-        "rating": 4.7
+        "rating": 4.7,
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 11,
@@ -107,7 +173,13 @@
         "brand": "Fender",
         "image": "../../public/images/guitars/11.jpg",
         "description": "The Fender Precision Bass is a legendary instrument that has defined the sound of modern music for decades. Known for its punchy, deep sound and simple, robust design, it features a split-coil Precision Bass pickup and a comfortable neck profile. Its versatile tone makes it suitable for a wide range of genres, from rock to funk.",
-        "rating": 4.8
+        "rating": 4.8,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 12,
@@ -117,7 +189,14 @@
         "brand": "Music Man",
         "image": "../../public/images/guitars/12.jpg",
         "description": "The Music Man StingRay is a high-quality bass guitar revered for its powerful tone and professional-grade features. Its active electronics, alnico humbucking pickup, and 3-band EQ allow for precise tonal shaping. The StingRay's iconic design, comfortable neck, and exceptional build quality make it a top choice for serious bassists.",
-        "rating": 4.9
+        "rating": 4.9,
+        "sale": "50%",
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 13,
@@ -127,7 +206,15 @@
         "brand": "Cordoba",
         "image": "../../public/images/guitars/13.jpg",
         "description": "The Cordoba C5 is a well-crafted classical guitar that offers a warm, resonant sound and excellent playability. With its solid cedar top and mahogany back and sides, it produces a rich, full tone ideal for classical and fingerstyle players. The traditional Spanish fan bracing and comfortable neck profile make it a great choice for students and professionals alike.",
-        "rating": 4.7
+        "rating": 3.7,
+        "sale": "10%",
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 14,
@@ -137,7 +224,13 @@
         "brand": "Yamaha",
         "image": "../../public/images/guitars/14.jpg",
         "description": "The Yamaha C40 is an affordable classical guitar perfect for beginners and students. Featuring a spruce top and meranti back and sides, it offers a well-balanced tone with good projection. Its comfortable neck and smooth fretboard make learning easy and enjoyable, making it a popular choice for those starting their musical journey.",
-        "rating": 4.6
+        "rating": 2.0,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 15,
@@ -147,7 +240,13 @@
         "brand": "Alhambra",
         "image": "../../public/images/guitars/15.jpg",
         "description": "The Alhambra 3C is a finely crafted classical guitar known for its superior sound quality and playability. With a solid red cedar top and laminated mahogany back and sides, it produces a rich, warm tone with excellent projection. The neck is comfortable and easy to play, making it a great choice for both beginners and advanced players.",
-        "rating": 4.8
+        "rating": 4.8,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 16,
@@ -157,7 +256,14 @@
         "brand": "Jackson",
         "image": "../../public/images/guitars/16.jpg",
         "description": "The Jackson JS22 Dinky is an affordable electric guitar that offers impressive performance and style. Featuring a poplar body, maple neck, and Jackson high-output humbuckers, it delivers a powerful, aggressive sound perfect for rock and metal. The compound-radius fingerboard and double-locking tremolo provide excellent playability and tuning stability.",
-        "rating": 4.5
+        "rating": 2.5,
+        "sale": "10%",
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 17,
@@ -167,7 +273,13 @@
         "brand": "Squier",
         "image": "../../public/images/guitars/17.jpg",
         "description": "The Squier Classic Vibe '50s Telecaster is a budget-friendly tribute to the iconic Fender Telecaster. With its pine body, maple neck, and vintage-style single-coil pickups, it delivers the bright, twangy tones that defined early rock and roll. The classic design and modern playability make it a great choice for players seeking vintage vibes without breaking the bank.",
-        "rating": 4.6
+        "rating": 4.6,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 18,
@@ -177,7 +289,13 @@
         "brand": "Schecter",
         "image": "../../public/images/guitars/18.jpg",
         "description": "The Schecter Omen Extreme-6 is a versatile electric guitar that combines stunning looks with powerful performance. Featuring a mahogany body with a quilted maple top, it delivers rich, resonant tones. The Schecter Diamond Plus pickups and thin 'C' neck profile provide excellent playability and a wide range of tonal options, making it suitable for various genres.",
-        "rating": 4.7
+        "rating": 4.7,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 19,
@@ -187,7 +305,14 @@
         "brand": "Rickenbacker",
         "image": "../../public/images/guitars/19.jpg",
         "description": "The Rickenbacker 330 is an iconic electric guitar known for its distinctive jangle and retro aesthetics. Featuring a maple body, rosewood fingerboard, and Rickenbacker 'Hi-Gain' pickups, it delivers a bright, punchy sound ideal for rock and pop. The unique design and superb build quality make it a favorite among musicians seeking a classic vibe.",
-        "rating": 4.8
+        "rating": 3.8,
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     },
     {
         "id": 20,
@@ -197,6 +322,13 @@
         "brand": "ESP",
         "image": "../../public/images/guitars/20.jpg",
         "description": "The ESP LTD EC-1000 is a high-quality electric guitar designed for professional performance. With its mahogany body, flamed maple top, and EMG 81/60 pickups, it delivers powerful, aggressive tones perfect for rock and metal. The set-neck construction and thin 'U' neck profile ensure superb playability and sustain, making it a top choice for serious players.",
-        "rating": 4.8
+        "rating": 4.8,
+        "begginerFriendly": true,
+        "imageList": [
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg",
+            "../../public/images/guitars/1.jpg"
+        ]
+
     }
 ]

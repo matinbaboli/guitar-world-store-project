@@ -7,7 +7,7 @@ import {
      } from "@mui/material"
 import {primaryColor, primaryColorLight, primaryColorVeryLight,  secondaryColor, secondaryColorLight, generalBackgroundColor, secondaryColorVeryLight} from "../theme"
 import Value from "../components/Value"
-
+import CoreQuality from "../components/coreQuality"
 
 import QuestionIcon from "../../public/question-icon.svg?react"
 import BinocularsIcon from "../../public/binoculars-icon.svg?react"
@@ -66,30 +66,7 @@ const AboutUs = () => {
 
                     />
 
-                <Box 
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    width={{xs: "100%",md:"120%"}}
-                    mr={{md: "200px"}}
-                    mb={{md: "100px"}}
-                    >
-                    <BinocularsIcon style={{transform: "translateY(1px)"}}/>
-                    <Stack 
-                        alignItems="center" 
-                        color="white"
-                        padding="15px"
-                        width="100%" 
-                        sx={{
-                            background: `linear-gradient( to bottom, ${secondaryColor} ,#A38FF0 150%)`
-                        }}
-                        >
-                        <Typography variant="h6">VISION</Typography>
-                        <Typography variant="body1" >
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, iure.
-                        </Typography>
-                    </Stack>
-                </Box>
+                    <CoreQuality vision/>
             </Stack>
             <Typography paddingInline={{xs: "20px", md: "0"}} lineHeight="30px" ml={{md: "300px",lg: "250px"}} fontSize="1.2rem">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, ipsa natus maxime expedita molestias perferendis doloribus saepe corrupti sapiente ex accusantium similique, vero fugit eos ducimus numquam neque in illo.
@@ -113,29 +90,7 @@ const AboutUs = () => {
                     }}
                 />
 
-                <Box 
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    width={{xs: "100%",md:"120%"}}
-                    ml={{md: "200px"}}
-                    >
-                    <TargetIcon style={{transform: "translateY(1px)"}}/>
-                    <Stack 
-                        alignItems="center" 
-                        color="white"
-                        padding="15px"
-                         width="100%"
-                        sx={{
-                            background: `linear-gradient( to bottom, ${primaryColor} -5% , #A38FF0 280%)`
-                        }}
-                        >
-                        <Typography variant="h6">MISSION</Typography>
-                        <Typography variant="body1" >
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, iure.
-                        </Typography>
-                    </Stack>
-                </Box>
+                <CoreQuality mission/>
             </Stack>
             <Box>
                 <Typography align="center" variant="h2" color={primaryColor}>

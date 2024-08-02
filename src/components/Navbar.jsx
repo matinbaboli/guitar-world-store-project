@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useRef, useContext} from "react"
 import {
      Box, 
      Container, 
@@ -10,9 +10,15 @@ import {
      ListItem,
      ListItemButton,
      ListItemText,
-     Button, } from "@mui/material"
+     Button,
+     Typography,
+     Stack,
+     Badge
+    } from "@mui/material"
 import {darkBackgroundColor} from "../theme.jsx"
 import LinkModified from "./LinkModified.jsx"
+import {context} from "../contextApi.jsx"
+import TooltipModified from "./TooltipModified.jsx"
 
 
 // ICONS
@@ -21,14 +27,41 @@ import  MenuIcon from "../../public/menu-icon.svg?react"
 import  CartIcon from "../../public/cart-icon.svg?react"
 import  CloseIcon from "../../public/close-icon.svg?react"
 import  ProfileIcon from "../../public/profile-icon.svg?react"
+import  Heart from "../../public/heart.svg?react"
 
 
-export const smallNavHeight = "70px"
-export const bigNavHeight = "100px"
+export const smallNavHeight = 70
+export const bigNavHeight = 100
+
+const BadgeForCartIcon = ({children, smallScreen}) => {
+    const {shoppingCartItems} = useContext(context)
+    let shoppingCartItemsCount = 0
+    shoppingCartItems.forEach(item => {
+        shoppingCartItemsCount += item.count
+    })
+    return <Badge badgeContent={shoppingCartItemsCount} color="secondary"
+    sx={{
+        ["& .MuiBadge-badge"]: {
+            transform: `translate(${smallScreen ? -15: 0}px, 5px)`,
+            opacity: shoppingCartItems.length === 0 && "0%",
+            transition: "opacity 200ms ease-in-out",
+            fontSize: "0.9rem"
+        }
+    }} >
+        {children}
+    </Badge>
+
+}
 
 
-const Navbar = ({windowWidth}) => {
+const Navbar = ({windowWidth, fixed, navHeight}) => {
 const [open, setOpen] = useState(false)
+const ref = useRef()
+const wishlistLink = useRef()
+const {windowScrollPositionY, wishlistIconActivateAnimation} = useContext(context)
+
+const currentNavHeight = windowWidth > 900 ? bigNavHeight : smallNavHeight
+
 
 const toggleMenu = (newOpen) => {
     setOpen(newOpen)
@@ -36,39 +69,96 @@ const toggleMenu = (newOpen) => {
 
 
 
+useEffect(() => {
+    if(fixed && (currentNavHeight < windowScrollPositionY)) {
+        ref.current.classList.add("move-in-top")
+    } else {
+        ref.current.classList.remove("move-in-top")
+    }
+}, [windowScrollPositionY])
 
-    return <>
-    <Box sx={{
+useEffect(() => {
+    if(wishlistIconActivateAnimation) {
+        wishlistLink.current.classList.add('jump')
+        setTimeout(() => {
+            wishlistLink.current.classList.remove('jump')
+        }, 1000)
+    }
+}, [wishlistIconActivateAnimation])
+
+
+return <Box
+    ref={ref}
+     sx={{
+        display: fixed && "none",
+        top: 0,
+        zIndex: 5,
         width: "100%",
-        height: {xs: smallNavHeight, md: bigNavHeight},
-        bgcolor: darkBackgroundColor,
+        height: (fixed ? currentNavHeight - 20 : currentNavHeight) + "px",
+        background: fixed ? "linear-gradient( to left, rgba(50, 50, 50, 1) 0%, rgba(80, 80, 80, 1) 100%)": darkBackgroundColor,
 
     }}>
+        <style>
+            {`
+                .move-in-top {
+                    display: block;
+                    position: fixed;
+                    animation: moveInTopNavbar 300ms ease-in-out;
+                }
+
+                .jump {
+                    animation: jumpTwice 300ms ease-out 2;
+                }
+
+                @keyframes jumpTwice {
+                    0% {
+                        transform: scale(1);
+                    }
+                    50% {
+                        transform: scale(1.2);
+                    
+                    }
+                    100% {
+                        transform: scale(1);                        
+                    }
+                }
+
+                @keyframes moveInTopNavbar {
+                    from {
+                        transform: translateY(-100px);
+                    }
+                    to {
+                        transform: translateY(0px);
+                    }
+                }
+            `}
+        </style>
         <Container sx={{
             height: "100%",
         }}>
-            <Grid
-                container
-                direction="row"
+            <Box
+                display="flex"
                 justifyContent="space-between"
-                alignContent="end"
+                alignItems="center"
                 sx={{
                     height: "100%"
                 }}
             >
-                <LinkModified to="Home" sx={{height: 50}}>
+                <LinkModified to="Home" >
                     <Box
                     component="img"
-                    sx={{ height: {xs: 55, md: 70}, width: {xs: 120, md: 140}, transform: "translateY(-5px)" }}
+                    sx={{ height: {xs: 35, md: 50}, width: {xs: 100, md: 120}, transform: "translateY(-5px)" }}
                     alt="Logo"
                     src={Logo}
                     />            
                 </LinkModified>
                 {windowWidth > 900 ?
-                    <Box>
-                        {['Home', 'Catalog', 'About Us', 'Wishlist'].map(item => {
+                    <Stack direction="row" alignItems="center" gap={8}>
+                        <Box>
+
+                        {['Home', 'Catalog', 'About Us'].map(item => {
                             return <Button sx={{color: "white", borderRadius: "0px",
-                            position: "relative",
+                                position: "relative",
                                 '&::before': {
                                     content: '""',
                                     position: "absolute",
@@ -85,7 +175,7 @@ const toggleMenu = (newOpen) => {
                                     '&::before': {
                                         opacity: 1,
                                     }
-
+                                    
                                 },
                                 backGroundColor: "none"
                             }}>
@@ -95,28 +185,51 @@ const toggleMenu = (newOpen) => {
                             </Button>
         
                         })}
-                        <LinkModified to="Cart">
-                            <IconButton sx={{ml: 8}} aria-label="menu" size="large">
-                                <CartIcon />
-                            </IconButton>
-                        </LinkModified>
-                        <IconButton aria-label="menu" size="large">
-                            <ProfileIcon />
-                        </IconButton>
-                    </Box>               
+                        </Box>
+                        <Box>
+                            <LinkModified to="Wishlist" >
+                                <TooltipModified title="Wish List">
+                                    <IconButton  aria-label="menu" size="large" ref={wishlistLink}>
+                                        <Heart style={{fill: "white"}}/>
+                                    </IconButton>
+                                </TooltipModified>
+                            </LinkModified>
+                            <LinkModified to="Cart">
+                                <BadgeForCartIcon>
+                                    <TooltipModified title="Shopping Cart">
+                                        <IconButton aria-label="menu" size="large">
+                                            <CartIcon />
+                                        </IconButton>
+                                    </TooltipModified>
+                                </BadgeForCartIcon>
+                            </LinkModified>
+                            <TooltipModified title="Profile">
+                                <IconButton aria-label="menu" size="large">
+                                    <ProfileIcon />
+                                </IconButton>
+                            </TooltipModified>
+                        </Box>
+                    </Stack>               
                     :
                     <Box>
+                        <LinkModified to="Wishlist">
+                                <IconButton aria-label="menu" size="large">
+                                    <Heart style={{fill: "white"}}/>
+                                </IconButton>
+                        </LinkModified>
                         <LinkModified to="Cart">
-                            <IconButton sx={{mr: 2}} aria-label="menu" size="large">
-                                <CartIcon />
-                            </IconButton>                        
+                            <BadgeForCartIcon smallScreen>
+                                <IconButton sx={{mr: 2}} aria-label="menu" size="large">
+                                    <CartIcon />
+                                </IconButton>                        
+                            </BadgeForCartIcon>
                         </LinkModified>
                         <IconButton aria-label="menu" size="large" onClick={() => toggleMenu(true)}>
                             <MenuIcon />
                         </IconButton>
                     </Box>
                 }
-            </Grid>
+            </Box>
         </Container>
         
         <Drawer onClose={() => toggleMenu(false)} open={open} anchor="right" >
@@ -155,7 +268,6 @@ const toggleMenu = (newOpen) => {
             </Box>
         </Drawer>
     </Box>
-    </>
 }
 
 export default Navbar

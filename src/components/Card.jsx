@@ -5,13 +5,16 @@ import {
     Card,
     CardActionArea,
     CardMedia,
-    CardContent
+    CardContent,
+    Rating
  } from "@mui/material"
  import {primaryColor, secondaryColor, secondaryColorLight} from "../theme"
  import LinkModified from "./LinkModified.jsx"
 import { context } from "../contextApi.jsx"
+import TooltipModified from "./TooltipModified.jsx"
 
-const CardCustomized = ({outOfTurn, end, start, myClass, small , data}) => {
+
+const CardCustomized = ({outOfTurn, end, start, myClass, small , data, darkBackground}) => {
     const {setStoredProductId} = useContext(context)
     const {name, image, price , rating, id} = data
     let modifiedName = name.substring(0, 18) + "..."
@@ -19,7 +22,7 @@ const CardCustomized = ({outOfTurn, end, start, myClass, small , data}) => {
     return <LinkModified to={`ProductDetails/${id}`}>
     <Card 
     onClick={() => {
-        localStorage.setItem("productId", id)
+        // localStorage.setItem("productId", id)
         setStoredProductId(id)
     }} 
     className={myClass} 
@@ -50,7 +53,7 @@ const CardCustomized = ({outOfTurn, end, start, myClass, small , data}) => {
                         backgroundSize: "contain",
                         backgroundColor: "white",
                         borderRadius: "4px",
-                        boxShadow:`0px 1px 1px 1px ${secondaryColorLight}, 0px 4px 15px ${secondaryColorLight}`,
+                        boxShadow:`0px 1px 1px 1px ${darkBackground ? "rgba(0, 0, 0, 0.5)": secondaryColorLight}, 0px 4px 15px ${darkBackground ? "rgba(0, 0, 0, 0.5)": secondaryColorLight}`,
                         // transition: "all 0.3s ease-in-out",
 
                     }}
@@ -74,19 +77,27 @@ const CardCustomized = ({outOfTurn, end, start, myClass, small , data}) => {
                         }}>
                             {price ? `$${price}`:"$9.99"}
                         </Typography>
-                        <Typography color={primaryColor} variant="h6" 
-                        sx={{position: "absolute",
+                        <Rating
+                        name="rating"
+                        readOnly
+                        size="small"
+                        value={rating}
+                        precision={0.1}
+                        sx={{
+                            position: "absolute",
+                            bottom: 0,
                             right: 0,
-                            bottom: "0",
-                            zIndex: "1",
-                            m: "10px"
-                        }}>
-                            {rating}
-                        </Typography>
+                            zIndex: 1,
+                            marginBlock: "15px",
+                            mr: "10px"
+                        }}
+                        />
                     </CardMedia>
                     <CardContent>
                     {!outOfTurn && 
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" sx={{
+                            color: darkBackground ? "rgba(255, 255, 255, 0.8)": "black"
+                        }}>
                             {name ? modifiedName :"Guitar"}
                         </Typography>
                     }

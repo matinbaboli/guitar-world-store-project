@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react"
+import React, {useState, useContext, useEffect} from "react"
 import {
     Box,
     Drawer,
@@ -16,11 +16,14 @@ import {
     Radio,
     Slider,
     Grid,
+    Stack
 } from "@mui/material"
 import SectionContainer from "../components/SectionContainer"
 import CardCustomized from "../components/Card"
 import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, generalBackgroundColor, darkBackgroundColor} from "../theme"
 import UpArrow from "../../public/up-arrow-icon.svg?react"
+import SettingsIcon from "../../public/settings-icon.svg?react"
+import {context} from "../contextApi"
 
 import data from "../data.json"
 
@@ -42,46 +45,63 @@ const Catalog = ({windowWidth}) => {
 
 
     return (
-        <SectionContainer backgroundColor={generalBackgroundColor}>
-            <Grid container justifyContent="center"
-            alignContent="center" gap={{xs: 8, sm: 4}} marginBlock="50px" sx={{
-                width: {md: "calc(105% - 300px)"}
-            }}>
-                <Grid item xs={12}>
-                    <Typography variant="h2" component="h1" align="center" mb="50px">
-                        Our Products
-                    </Typography>
-                </Grid>
-
-                {finalData.map((guitar) => {
-                    return (
-                        <Grid key={guitar.id} item>
-                            <CardCustomized small data={guitar}/>
+        <SectionContainer backgroundColor={generalBackgroundColor} hero={finalData.length === 0}>
+                {finalData.length === 0 ?
+                    <Stack alignItems="center" gap={3} width={{md: "calc(105% - 300px)"}}>
+                        <Box component="img" width="300px" src="../../public/images/magnifier.png"/>
+                        <Typography variant="h6">Sorry couldn't find the items you where looking for</Typography>    
+                    </Stack>
+                :
+                    <Grid container justifyContent="center"
+                    alignContent="center" gap={{xs: 8, sm: 4}} marginBlock="50px" sx={{
+                        width: {md: "calc(105% - 300px)"}
+                    }}>
+                            <Grid item xs={12}>
+                            <Typography variant="h2" component="h1" align="center" mb="50px">
+                                Our Products
+                            </Typography>
                         </Grid>
-                    )
-                })}
-            </Grid>
+
+                        {finalData.map((guitar) => {
+                            return (
+                                <Grid key={guitar.id} item>
+                                    <CardCustomized small data={guitar}/>
+                                </Grid>
+                            )
+                        })}
+                    </Grid>
+                }
            {windowWidth < 900 ? <>
-           <Button
-                variant="contained"
-                endIcon={<UpArrow/>} 
+           <IconButton
+                // endIcon={<UpArrow/>} 
                 onClick={() => setOpen(true)}
                 sx={{
                     position: "fixed",
-                    bottom: "0px",
-                    left: 0,
-                    right: 0,
-                    marginInline: "100px"
-                    
+                    top: 180,
+                    // left: 0,
+                    right: -1,
+                    zIndex: 5,
+                    pr: 2.3,
+                    pl: 1.6,
+                    paddingBlock: 1.4,
+
+                    // marginInline: "100px"
+                    backgroundColor: darkBackgroundColor,
+                    borderRadius: "10px",
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
                     }}>
-                    catalog settings
-            </Button>
+                    <SettingsIcon/>
+            </IconButton>
             <Drawer
-            anchor="bottom"
+            anchor="right"
             open={open}
             onClose={() => setOpen(false)}
+            sx={{
+                [`& .MuiDrawer-paper`]: { width: {xs: "80%", sm: "60%"}}
+            }}
             >
-                <DrawerContent finalData={finalData} setFinalData={setFinalData}/>
+                <DrawerContent setOpen={setOpen} finalData={finalData} setFinalData={setFinalData}/>
             </Drawer>
             </>
             :
@@ -120,9 +140,10 @@ const Catalog = ({windowWidth}) => {
 
 
 
-const DrawerContent = ({setFinalData}) => {
+const DrawerContent = ({setFinalData, setOpen}) => {
     const [sort, setSort] = useState("none")
-    const [type, setType] = useState("All")
+    // const [type, setType] = useState("All")
+    const {productTypeFilter, setProductTypeFilter, extraFilter, setExtraFilter} = useContext(context)
     const [sliderValue, setSliderValue] = useState([0, mostExpensiveItem])
 
 
@@ -139,10 +160,10 @@ const DrawerContent = ({setFinalData}) => {
 
     function filterBasedOnType(sortedData) {
         let newData
-        if(type === "All") {
+        if(productTypeFilter === "All") {
             newData = sortedData
         } else {
-            newData = sortedData.filter((item) => item.type === type)
+            newData = sortedData.filter((item) => item.type === productTypeFilter)
         }
         return newData
     }
@@ -153,19 +174,43 @@ const DrawerContent = ({setFinalData}) => {
         // console.log(sliderValue)
     }
 
+    function handleExtraFilter(limitedDataBasedOnPrice) {
+        let newData = []
+        if(extraFilter === "None") {
+            newData = limitedDataBasedOnPrice
+        } else if(extraFilter === "SpecialOffers") {
+            newData = limitedDataBasedOnPrice.filter((item) => item.sale)
+        } else {
+            newData = limitedDataBasedOnPrice.filter((item) => item.begginerFriendly)
+        }
+        return newData
+    }
+
     function applyFilters() {
         let sortedData = sortData()
         let filteredData = filterBasedOnType(sortedData)
         let limitedDataBasedOnPrice = limitBasedOnPriceRange(filteredData)
-        setFinalData(limitedDataBasedOnPrice) 
+        let extraFilterApplied = handleExtraFilter(limitedDataBasedOnPrice)
+        setFinalData(extraFilterApplied) 
     }
-
+    
+    function handleApplyBtnClick() {
+        applyFilters()
+        setOpen(false)
+    }
+    
     function removeAllFilters() {
         setSort("none")
-        setType("All")
+        setProductTypeFilter("All")
         setSliderValue([0, mostExpensiveItem])
+        setExtraFilter("None")
         setFinalData(data)
+        setOpen(false)
     }
+
+    useEffect(() => {
+        applyFilters()
+    }, [])
 
     return (
         <Box
@@ -213,8 +258,8 @@ const DrawerContent = ({setFinalData}) => {
                        row
                        aria-labelledby="demo-controlled-radio-buttons-group"
                        name="controlled-radio-buttons-group"
-                       value={type}
-                       onChange={(e) => setType(e.target.value)}
+                       value={productTypeFilter}
+                       onChange={(e) => setProductTypeFilter(e.target.value)}
                    >
                        <FormControlLabel value="Classical" control={<Radio />} label="Classical" />
                        <FormControlLabel value="Acoustic" control={<Radio />} label="Acoustic" />
@@ -222,7 +267,8 @@ const DrawerContent = ({setFinalData}) => {
                        <FormControlLabel value="All" control={<Radio />} label="All" />
                    </RadioGroup>
                </FormControl>
-               <Box sx={{ width: "99%", mt: "50px", mb: "70px" }}>
+
+               <Box sx={{ width: "99%", marginBlock:"40px" }}>
                    <FormLabel id="demo-controlled-radio-buttons-group">Price Range</FormLabel>
                    <Slider
                        getAriaLabel={() => 'Price range'}
@@ -235,6 +281,22 @@ const DrawerContent = ({setFinalData}) => {
                        // getAriaValueText={valuetext}
                    />
                </Box>
+
+               <FormControl sx={{ width: "100%", mb: "30px" }}>
+                   <FormLabel id="extra-filters-controlled-radio-buttons">Extra Filters</FormLabel>
+                   <RadioGroup
+                       row
+                       aria-labelledby="extra-filters-controlled-radio-buttons"
+                       name="radio-buttons-group"
+                       value={extraFilter}
+                       onChange={(e) => setExtraFilter(e.target.value)}
+                   >
+                       <FormControlLabel value="None" control={<Radio />} label="None" />
+                       <FormControlLabel value="SpecialOffers" control={<Radio />} label="Special Offers" />
+                       <FormControlLabel value="ForBegginers" control={<Radio />} label="For Begginers" />
+                   </RadioGroup>
+               </FormControl>
+
            </Box>
            <Box
            display="flex"
@@ -246,7 +308,7 @@ const DrawerContent = ({setFinalData}) => {
                <Button variant="outlined" onClick={removeAllFilters}>
                    Remove Changes
                </Button>
-               <Button variant="contained" onClick={applyFilters}>
+               <Button variant="contained" onClick={handleApplyBtnClick}>
                    Apply
                </Button>
            </Box>

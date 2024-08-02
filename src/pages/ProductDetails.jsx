@@ -7,13 +7,21 @@ import {
     Stack,
     Rating,
     Divider,
+    IconButton
 } from "@mui/material"
 import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, generalBackgroundColor, darkBackgroundColor} from "../theme"
-import InteractiveCounter from "../components/InteractiveCounter"
 import Comment from "../components/Comment"
 import {smallNavHeight, bigNavHeight} from "../components/Navbar"
 import {context} from "../contextApi"
 import data from "../data.json"
+import usePersistantState from "../usePersistantState"
+import TooltipModified from "../components/TooltipModified"
+import PlusIcon from "../../public/plus-icon.svg?react"
+import MinusIcon from "../../public/minus-icon.svg?react"
+import Heart from "../../public/heart.svg?react"
+import HeartFilled from "../../public/heart-filled.svg?react"
+import { red } from "@mui/material/colors"
+
 
 let initialTargetItem = {
     name: "Guitar",
@@ -27,16 +35,70 @@ let initialTargetItem = {
 
 
 const ProductDetails = ({windowWidth, }) => {
+    const {storedProductId, shoppingCartItems, setShoppingCartItems, wishlistItems, setWishlistItems, wishlistIconActivateAnimation, setWishlistIconActivateAnimation} = useContext(context)
     const [ratingValue, setRatingValue] = useState(2)
     const [targetItemFromData, setTargetItemFromData] = useState(initialTargetItem)
-    const {storedProductId} = useContext(context)
-    const {name, price, image, description, rating} = targetItemFromData
+    const [counter, setCounter] = useState(1)
+    const [activeStep, setActiveStep] = useState(0)
+
+    const [isAddedToCart, setIsAddedToCart] = usePersistantState(false, "isAddedToCart" + storedProductId)
+    const [isAddedToWishlist, setIsAddedToWishlist] = usePersistantState(false, "isAddedToWishlist" + storedProductId)
+    const {name, price, image, description, rating, id, type, brand, imageList = []} = targetItemFromData
+
+
+    function handleAddToCart() {
+        let copyOfShoppingCartItems = [...shoppingCartItems]
+        let newCartItem = {
+            id: id,
+            name: name,
+            price: price,
+            type: type,
+            brand: brand,
+            image: image,
+            count: counter
+        }
+        copyOfShoppingCartItems.push(newCartItem)
+        setShoppingCartItems(copyOfShoppingCartItems)
+        setIsAddedToCart(true)
+    }
+
+    function handleAddOrRemoveWishlist() {
+        let copyOfWishlistItems = [...wishlistItems]
+
+        if(isAddedToWishlist) {
+            let filteredWishlistItems = copyOfWishlistItems.filter(item => item.id !== storedProductId)
+            setWishlistItems(filteredWishlistItems)
+            setWishlistIconActivateAnimation(false)
+        } else {
+            let newWishlistItem = {
+                id: id,
+                name: name,
+                price: price,
+                type: type,
+                brand: brand,
+                image: image,
+                count: counter
+            }
+            copyOfWishlistItems.push(newWishlistItem)
+            setWishlistItems(copyOfWishlistItems)
+            setWishlistIconActivateAnimation(true)
+        }
+        setIsAddedToWishlist(!isAddedToWishlist)
+    }
+
+
         
 
     useEffect(() => {
-        let myItem = data.filter((item) => item.id === (storedProductId || Number(localStorage.getItem("productId"))))
+        let myItem = data.filter((item) => item.id === storedProductId)
         setTargetItemFromData(myItem[0])
-    },[])
+
+        shoppingCartItems.forEach(item => {
+            if(item.id === storedProductId) {
+                setCounter(item.count)
+            } 
+        }) 
+    }, [])
     
 
     return (
@@ -59,11 +121,9 @@ const ProductDetails = ({windowWidth, }) => {
                 width="100%"
                 sx={{
                     position: {md: "sticky"},
-                    top: "50px",
+                    top: "100px",
                     height: "100%",
                     paddingBlock: {md: "20px"},
-
-                    // height: `calc(100vh - ${windowWidth > 900 ? bigNavHeight: smallNavHeight})`,
                 }}
             >
                 <Box>
@@ -97,9 +157,9 @@ const ProductDetails = ({windowWidth, }) => {
                     </Box>
                     <MobileStepper
                     variant="dots"
-                    steps={6}
+                    steps={imageList.length}
                     position="static"
-                    activeStep={1}
+                    activeStep={activeStep}
                     sx={{ 
                         width: {xs: "100%", md: "70%"},
                         boxSizing: "border-box",
@@ -129,14 +189,78 @@ const ProductDetails = ({windowWidth, }) => {
                     }
                     />
                 </Box>
-                { windowWidth > 900 &&
-                <Stack direction="row" justifyContent="center" gap={2} mt="20px">
-                    <InteractiveCounter roundCorners label="Quantity:"/>
-                    <Button variant="contained">
-                        add to cart
-                    </Button>
+                <Stack justifyContent="center" alignItems="center" mt="20px">
+                    <Stack direction={windowWidth > 900 ? "row" : "column"} gap={2}>
+
+                        <Box 
+                            display="flex"
+                            justifyContent="center"
+                            gap={2}
+                            sx={{
+                                background: secondaryColor,
+                                color: "white",
+                                paddingBlock: "5px",
+                                borderRadius: "5px"
+                            }}
+                            >
+                            <Typography 
+                                variant="h5"
+                                letterSpacing="2px"
+                                pl="10px"
+                                mr="20px"
+                                >
+                                Quantity:
+                            </Typography>
+
+                            <IconButton onClick={() => {
+                                if(counter <= 1) {
+                                    setCounter(1)
+                                    alert("Quantity can't be below one")
+                                } else {
+                                    setCounter(counter - 1)
+                                }
+                                
+                                if (isAddedToCart) {
+                                    let copiedShoppingCartItems =[...shoppingCartItems]
+                                    copiedShoppingCartItems.map(item => {
+                                        if(item.id === storedProductId) {
+                                            item.count = counter > 1 ? counter - 1 : counter
+                                        }
+                                    })
+                                    setShoppingCartItems(copiedShoppingCartItems)
+                                }
+                                
+                            }}>
+                                <MinusIcon style={{width: "15px"}}/>
+                            </IconButton>
+                            <Typography variant="h4">{counter}</Typography>
+                            <IconButton onClick={() => {
+                                setCounter(counter + 1)
+                                
+                                if (isAddedToCart) {
+                                    let copiedShoppingCartItems =[...shoppingCartItems]
+                                    copiedShoppingCartItems.map(item => {
+                                        if(item.id === storedProductId) {
+                                            item.count = counter + 1 
+                                            // the plus one is the only fix i can could come up with at the moment. the problem is that when i increase the counter, the actual value behind the scenes in one number behind, on the counter display it's fine but when i go to the cart, the counter overthere is one number behind 
+                                        }
+                                    })
+                                    setShoppingCartItems(copiedShoppingCartItems)
+                                }
+                            }}>
+                                <PlusIcon style={{width: "15px"}}/>
+                            </IconButton>
+                        </Box>
+                        {
+                            isAddedToCart ?
+                            <Typography>{counter} {counter > 1 ? "items have" : "item has"} been added to the cart</Typography>                        
+                            :
+                            <Button onClick={handleAddToCart} variant="contained">
+                                add to cart
+                            </Button>
+                        }
+                    </Stack>
                 </Stack>
-                }
 
             </Box>
             <Box   
@@ -172,11 +296,17 @@ const ProductDetails = ({windowWidth, }) => {
                         // }}
                     />
                     <Typography variant="h6" sx={{
-                        color: "rgba(0, 0, 0, 0.6)"
+                        color: "rgba(0, 0, 0, 0.6)",
+                        mr: "20px"
                     }}>
                         {`(${rating})  `}
                         from 10 reviews
                     </Typography>
+                    <TooltipModified placement="top" title={!isAddedToWishlist ? "Add To Wish List" : "Remove From Wish List"}>
+                        <IconButton onClick={handleAddOrRemoveWishlist}>
+                            {isAddedToWishlist ? <HeartFilled style={{fill: red[700]}}/> : <Heart style={{fill: red[200]}}/>}
+                        </IconButton>
+                    </TooltipModified>
                 </Stack>
 
                 {windowWidth > 900 && 
@@ -196,14 +326,14 @@ const ProductDetails = ({windowWidth, }) => {
                     </Typography>
                 </Box>   
 
-                { windowWidth < 900 &&
+                {/* { windowWidth < 900 &&
                 <Stack alignItems="center" gap={2} mt="50px">
-                    <InteractiveCounter roundCorners label="Amount:"/>
                     <Button variant="contained">
                         add to cart
                     </Button>
-                </Stack>
+                </Stack> */
                 }
+                
 
                 <Box 
                     display="flex"

@@ -1,14 +1,21 @@
 import { Badge, Box, Stack, Typography } from "@mui/material"
 import React from "react"
 
-const CheckoutItem = () => {
+const CheckoutItem = ({data}) => {
+    const {image, name, price, type, count, id} = data
+    let modifiedName = name.substring(0, 8) + "..."
+
     return (
         <Box 
             display="flex"
+            justifyContent="space-between"
             gap={3}
             marginBlock="20px"
+            width="420px"
         >
-            <Badge badgeContent={3} color="primary" sx={{
+            <Stack direction="row" gap={3}>
+
+            <Badge badgeContent={count} color="secondary" sx={{
                 ["& .MuiBadge-badge"]: {
                     minWidth: "25px",
                     height: "25px",
@@ -17,29 +24,36 @@ const CheckoutItem = () => {
                 }
             }}  >
                 <Box
-                    component="img"
-                    alt="item-picture"
-                    src="../../public/images/guitar-pic.jpg"
-                    sx={{width: {xs: "100px", sm: "130px", md:"100px"},}}
+                    sx={{
+                        width: {xs: "100px", sm: "130px", md:"100px"},
+                        height: "110px",
+                        backgroundImage: `url(${image})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "contain",
+                        backgroundPosition: "center",
+                        backgroundColor: "white"
+                    }}
+                    
                     >
                 </Box>
             </Badge>
             <Box>
-                <Stack direction="row">
                     <Typography variant="h5">
-                        Guitar
+                        {name ? modifiedName : "Guitar"}
                     </Typography>
-                    <Typography variant="h5" ml="50px">
-                        $100
-                    </Typography>
-                </Stack>
+                {/* <Stack direction="row">
+                </Stack> */}
                     <Typography variant="subtitle1">
-                        Type: Acoustic
+                        Type: {type}
                     </Typography>
                     <Typography variant="subtitle1">
                         Other Info if needed
                     </Typography>
             </Box>
+            </Stack>
+                    <Typography variant="h6" ml="50px">
+                        ${price}
+                    </Typography>
         </Box>
     )
 }
