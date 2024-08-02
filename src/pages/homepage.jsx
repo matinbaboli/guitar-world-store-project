@@ -39,7 +39,7 @@ let heroSectionSlides = [
     {
         backgroundGradientColor: primaryColor,
         title: "Acoustic Guitars",
-        img: "images/Acoustic-guitar-representation.png",
+        img: "images/Acoustic-guitar-representation.jpg",
         type: "Acoustic"
     },
     {
@@ -269,7 +269,7 @@ const Homepage = ({windowWidth}) => {
         <Box  
             component="img"
             alt="polygon"
-            src="images/Polygon3.png"
+            src="images/Polygon3.jpg"
             sx={{
                 position: "absolute",
                 zIndex: "-1",
