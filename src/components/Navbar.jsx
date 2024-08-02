@@ -213,7 +213,7 @@ return <Box
                     :
                     <Box>
                         <LinkModified to="Wishlist">
-                                <IconButton aria-label="menu" size="large">
+                                <IconButton aria-label="menu" size="large" ref={wishlistLink}>
                                     <Heart style={{fill: "white"}}/>
                                 </IconButton>
                         </LinkModified>
