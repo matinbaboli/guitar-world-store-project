@@ -48,7 +48,7 @@ const Catalog = ({windowWidth}) => {
         <SectionContainer backgroundColor={generalBackgroundColor} hero={finalData.length === 0}>
                 {finalData.length === 0 ?
                     <Stack alignItems="center" gap={3} width={{md: "calc(105% - 300px)"}}>
-                        <Box component="img" width="300px" src="../../public/images/magnifier.png"/>
+                        <Box component="img" width="300px" src="images/magnifier.png"/>
                         <Typography variant="h6">Sorry couldn't find the items you where looking for</Typography>    
                     </Stack>
                 :

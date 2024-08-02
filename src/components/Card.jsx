@@ -41,7 +41,7 @@ const CardCustomized = ({outOfTurn, end, start, myClass, small , data, darkBackg
                 }}>
                 <CardActionArea>
                     <CardMedia
-                    image={image ? image:"../../public/images/guitar-pic.jpg"}
+                    image={image ? image:"images/guitar-pic.jpg"}
                     alt="guitar-title"
                     sx={{
                         position: "relative",

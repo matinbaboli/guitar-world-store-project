@@ -39,13 +39,13 @@ let heroSectionSlides = [
     {
         backgroundGradientColor: primaryColor,
         title: "Acoustic Guitars",
-        img: "public/images/Acoustic-guitar-representation.png",
+        img: "images/Acoustic-guitar-representation.png",
         type: "Acoustic"
     },
     {
         backgroundGradientColor: secondaryColor,
         title: "Electric Guitars",
-        img: "public/images/electric-guitarist.jpg",
+        img: "images/electric-guitarist.jpg",
         type: "Electric"
     }
 ]
@@ -269,7 +269,7 @@ const Homepage = ({windowWidth}) => {
         <Box  
             component="img"
             alt="polygon"
-            src="../../public/images/Polygon3.png"
+            src="images/Polygon3.png"
             sx={{
                 position: "absolute",
                 zIndex: "-1",
@@ -280,7 +280,7 @@ const Homepage = ({windowWidth}) => {
         <Box  
             component="img"
             alt="colorful-picks"
-            src="../../public/colorfulpicks.svg"
+            src="colorfulpicks.svg"
             sx={{
                 position: "absolute",
                 zIndex: "-1",
@@ -429,7 +429,7 @@ const Homepage = ({windowWidth}) => {
             ></Box>
             <Box
                 component="img"
-                src="../../public/images/Rectangle45.png"
+                src="images/Rectangle45.png"
                 position="absolute"
                 top={-165}
                 left={-250}
@@ -480,7 +480,7 @@ const Homepage = ({windowWidth}) => {
             <Box  
                     component="img"
                     alt="polygon"
-                    src="../../public/background-polygon.svg"
+                    src="background-polygon.svg"
                     width="100%"
                     sx={{
                         position: "absolute",
@@ -493,7 +493,7 @@ const Homepage = ({windowWidth}) => {
             <Box  
                     component="img"
                     alt="polygon"
-                    src="../../public/background-polygon.svg"
+                    src="background-polygon.svg"
                     width="100%"
                     sx={{
                         position: "absolute",

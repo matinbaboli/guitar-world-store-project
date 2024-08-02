@@ -53,7 +53,7 @@ const AboutUs = () => {
             <Stack alignItems="center" width="100%">
                 <Box
                     component="img"
-                    src="../../public/images/staff.png"
+                    src="images/staff.png"
                     alt="staff"
                     minWidth="400px"
                     width="140%"
@@ -78,7 +78,7 @@ const AboutUs = () => {
             >
                 <Box
                     component="img"
-                    src="../../public/images/our-store.png"
+                    src="images/our-store.png"
                     alt="staff"
                     minWidth="400px"
                     width="140%"

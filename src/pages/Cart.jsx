@@ -41,7 +41,7 @@ const Cart = () => {
                 <Stack alignItems="center" justifyContent="start" gap={4}>
                     <Box
                     component="img"
-                    src="../../public/images/empty-cart.png"
+                    src="images/empty-cart.png"
                     width="350px"
                     />
                     <Typography variant="h6">

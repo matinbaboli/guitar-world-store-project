@@ -135,7 +135,7 @@ const Wishlist = ({windowWidth}) => {
                                 <Stack alignItems="center" gap={4}>
                                     <Box
                                     component="img"
-                                    src="../../public/images/empty-wishlist.png"
+                                    src="images/empty-wishlist.png"
                                     width="400px"
                                     />
                                     <Typography variant="h6" color="gray">

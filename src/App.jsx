@@ -22,7 +22,7 @@ const App = () => {
 
     
     return (
-    <BrowserRouter>
+    <BrowserRouter basename="/guitar-world-store-project/">
         <Routes>
             <Route path="/" element={<Layout windowWidth={windowWidth}/>}>
                 <Route path="Home?" element={<Homepage windowWidth={windowWidth}/>}/>
