@@ -265,7 +265,7 @@ const Homepage = ({windowWidth}) => {
                 </Box>            
             </Stack>
     </SectionContainer>
-    <SectionContainer backgroundColor={generalBackgroundColor}>
+    <SectionContainer backgroundColor="white">
         <Box  
             component="img"
             alt="polygon"
@@ -454,7 +454,7 @@ const Homepage = ({windowWidth}) => {
             right={0}
             zIndex={-5}
             sx={{
-                background: `linear-gradient(to bottom, ${generalBackgroundColor} 50%, rgba(0, 0, 0, 0))`
+                background: `linear-gradient(to top, ${generalBackgroundColor} 50%, white)`
             }}
         >
 
