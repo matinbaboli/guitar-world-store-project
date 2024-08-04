@@ -24,12 +24,11 @@ import CustomerReview from "../components/CustomerReview"
 import CoreQualitiesHomePageBigScreen from "../components/CoreQualitiesHomePageBigScreen"
 import CoreQuality from "../components/coreQuality"
 import LinkModified from "../components/LinkModified"
+import ArrowIconButton from "../components/ArrowIconButton"
 import {context} from "../contextApi"
 
 
 
-import RightArrow from "../../public/right-arrow-icon.svg?react"
-import LeftArrow from "../../public/left-arrow-icon.svg?react"
 import QuestionIcon from "../../public/question-icon.svg?react"
 
 // when reloading the page on routes other than the / , which is the primary and base route, we recieve a 404 message and it says not found
@@ -230,17 +229,7 @@ const Homepage = () => {
                     spacing={3}
                     marginBlock="20px"
                     >
-                        <IconButton 
-                        onClick={handleDecrement}
-                        sx={{
-                            backgroundColor: primaryColor,
-                            width: "60px",
-                            height: "50px",
-                            borderRadius: "22px",            
-                            pr: "13px",
-                        }}>
-                            <LeftArrow/>
-                        </IconButton>  
+                        <ArrowIconButton color={primaryColor} onClick={handleDecrement} type="previous"/>
                         <LinkModified to="Catalog">
                             <Button onClick={() => setProductTypeFilter(type)} size="medium" variant="contained" color="secondary" 
                                 sx={{
@@ -250,17 +239,7 @@ const Homepage = () => {
                                 shop now
                             </Button>                  
                         </LinkModified>
-                        <IconButton
-                        onClick={handleIncrement}
-                        sx={{
-                            backgroundColor: primaryColor,
-                            width: "60px",
-                            height: "50px",
-                            borderRadius: "22px",
-                            pl: "13px",
-                        }}>
-                            <RightArrow/>
-                        </IconButton>  
+                        <ArrowIconButton color={primaryColor} onClick={handleIncrement} type="next"/>            
                     </Stack>
                 </Box>            
             </Stack>
@@ -468,7 +447,7 @@ const Homepage = () => {
             <Typography align="center" variant="h2" marginBlock="50px">
                 Customer Reviews
             </Typography>
-            <Grid container justifyContent="start" spacing={4} mb="50px">
+            <Grid container justifyContent="start" spacing={4} mb="50px" paddingInline={2}>
                 <Grid item sm={6}>
                     <CustomerReview/>
                 </Grid>

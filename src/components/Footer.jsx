@@ -43,7 +43,7 @@ const Footer = () => {
                         ))}
                         {windowWidth < 600 && 
                             <Typography align="center" variant="subtitle1" mt="40px">
-                                Made With React, all rights belong to Matin Baboli
+                                Made With React,
                             </Typography>
                         }
 
@@ -67,7 +67,7 @@ const Footer = () => {
                         </Stack>
                         {windowWidth > 600 && 
                             <Typography align="center" variant="subtitle1" mt="60px">
-                                Made With React, all rights belong to Matin Baboli
+                                Made With React,
                             </Typography>
                         }
 

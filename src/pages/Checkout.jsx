@@ -91,20 +91,20 @@ const Checkout = () => {
                     alignItems={{xs: "center", md: "start"}}
                     gap={4}
                     padding="20px"
-                    marginBlock={{xs: "30px", md: "0"}}
+                    marginBlock="30px"
                     marginInline={{xs: "0", sm: "50px", md: "0"}}
                     sx={{
-                        border: {xs: `2px solid ${primaryColor}`, md: "none"},
+                        border: {xs: `1px solid ${primaryColorLight}`, md: "none"},
                         borderRadius:"8px",
                         width: {md:"calc(100% - 352.68px)"},
                         boxSizing: "border-box"
                     }}
                     >
-                    <Typography variant="h3" component="h2">
+                    <Typography variant="h4" component="h2">
                         Contact Information
                     </Typography>
                     <TextField variant="standard" label="Email" fullWidth/>
-                    <Typography variant="h3" component="h2">
+                    <Typography variant="h4" component="h2">
                         Shipping Address
                     </Typography>
                     <TextField variant="standard" label="First Name" fullWidth/>
@@ -162,7 +162,7 @@ const Checkout = () => {
                             </Select>
                         </FormControl>
                     </Stack>
-                    <Button variant="contained" sx={{mt: "50px"}}>
+                    <Button variant="contained" sx={{mt: "50px", background: primaryColorLight}}>
                         place order
                     </Button>
                 </Box>

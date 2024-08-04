@@ -161,7 +161,7 @@ const ProductDetails = () => {
                     position="static"
                     activeStep={activeStep}
                     sx={{ 
-                        width: {xs: "100%", md: "70%"},
+                        width: {xs: "350px", md: "70%"},
                         boxSizing: "border-box",
                         background: "none",
                         marginInline: "auto",
@@ -301,13 +301,11 @@ const ProductDetails = () => {
                         {`(${rating})  `}
                         from 10 reviews
                     </Typography>
-                    {windowWidth > 900 && 
                     <TooltipModified placement="top" title={!isAddedToWishlist ? "Add To Wish List" : "Remove From Wish List"}>
                         <IconButton onClick={handleAddOrRemoveWishlist}>
                             {isAddedToWishlist ? <HeartFilled style={{fill: red[700]}}/> : <Heart style={{fill: red[200]}}/>}
                         </IconButton>
                     </TooltipModified>
-                    }
                 </Stack>
 
                 {windowWidth > 900 && 

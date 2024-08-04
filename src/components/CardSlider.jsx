@@ -5,6 +5,8 @@ import RightArrow from "../../public/right-arrow-icon.svg?react"
 import LeftArrow from "../../public/left-arrow-icon.svg?react"
 import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, primaryColorVeryLight, secondaryColorVeryLight} from "../theme"
 import data from "../data.json"
+import ArrowIconButton from "../components/ArrowIconButton"
+
 import { context } from "../contextApi"
 
 
@@ -437,15 +439,7 @@ const CardSlider = ({darkBackground, dataType}) => {
             marginTop="10px"
             pb="10px"
             >
-            <IconButton onClick={handlePrevBtnClick} sx={{
-                backgroundColor: darkBackground ? primaryColorLight: primaryColor,
-                width: "60px",
-                height: "50px",
-                borderRadius: "30px",
-                pr: "12px",
-            }}>
-                <LeftArrow/>
-            </IconButton>  
+            <ArrowIconButton color={darkBackground ? primaryColorLight: primaryColor} onClick={handlePrevBtnClick} type="previous"/>
             <MobileStepper
                 variant="dots"
                 steps={sliderDataFiltered.length}
@@ -458,15 +452,9 @@ const CardSlider = ({darkBackground, dataType}) => {
                     }
                  }}
                 />
-            <IconButton onClick={handleNextBtnClick} sx={{
-                backgroundColor: darkBackground ? secondaryColorLight: primaryColor,
-                width: "60px",
-                height: "50px",
-                borderRadius: "30px",
-                pl: "12px",
-            }}>
-                <RightArrow/>
-            </IconButton>  
+            <ArrowIconButton color={darkBackground ? secondaryColorLight: primaryColor} onClick={handleNextBtnClick} type="next"/>
+
+
         </Box>
 
 </Box>
@@ -476,7 +464,3 @@ const CardSlider = ({darkBackground, dataType}) => {
 }
 
 export default CardSlider
-
-
-
-// there may be a problem with mutating arrays and storing the result in state, learn more about it

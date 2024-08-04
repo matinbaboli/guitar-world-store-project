@@ -42,7 +42,7 @@ const Cart = () => {
                     <Box
                     component="img"
                     src="images/empty-cart.png"
-                    width="350px"
+                    width={{xs: "300px", sm: "350px"}}
                     />
                     <Typography variant="h6">
                         There are no items added to the Cart yet
