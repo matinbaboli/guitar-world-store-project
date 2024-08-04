@@ -34,9 +34,11 @@ let mostExpensiveItem = Math.max.apply(null, data.map(item => {
 
 
 
-const Catalog = ({windowWidth}) => {
+const Catalog = () => {
     const [open, setOpen] = useState(false)
     const [finalData, setFinalData] = useState(data)
+    const {windowWidth} = React.useContext(context)
+
 
     // function changingData(newData) {
     //     setFinalData(newData)

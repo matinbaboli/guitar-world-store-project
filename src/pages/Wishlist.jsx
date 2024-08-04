@@ -11,12 +11,12 @@ import {primaryColor, primaryColorLight, primaryColorVeryLight,  secondaryColor,
 import {context} from "../contextApi"
 import LinkModified from "../components/LinkModified"
 
-const Wishlist = ({windowWidth}) => {
+const Wishlist = () => {
     const [isPressed, setIsPressed] = useState(false)
     const [cursorX, setCursorX] = useState()
     const slider = useRef()
     const cards = useRef()
-    const {wishlistItems} = useContext(context)
+    const {wishlistItems, windowWidth} = useContext(context)
     const [activateDrag, setActivateDrag] = useState(false)
 
 
@@ -64,7 +64,6 @@ const Wishlist = ({windowWidth}) => {
         const containerRect = slider.current.getBoundingClientRect()
         const cardsRect = wishlistItems.length > 0 && cards.current.getBoundingClientRect()
         let areCardsWider = cardsRect.width > containerRect.width
-        // console.log(cardsRect)
 
         setActivateDrag(areCardsWider)
     }, [windowWidth])
@@ -82,7 +81,7 @@ const Wishlist = ({windowWidth}) => {
                 justifyContent="center"
                 width="100%"
                 borderRadius="50px"
-                overflow={{sm: "hidden"}}
+                overflow={{xs: "hidden"}}
                 boxShadow="3px 3px 10px rgba(0, 0, 0, 0.2)"
                 mb="50px"
             >
@@ -132,11 +131,11 @@ const Wishlist = ({windowWidth}) => {
                                     }                                
                                 </Box>  
                             :
-                                <Stack alignItems="center" gap={4}>
+                                <Stack alignItems="center" gap={4} marginBlock={5}>
                                     <Box
                                     component="img"
                                     src="images/empty-wishlist.png"
-                                    width="400px"
+                                    width={{xs: "300px", sm: "400px"}}
                                     />
                                     <Typography variant="h6" color="gray">
                                         There are no items added to the Wishlist yet

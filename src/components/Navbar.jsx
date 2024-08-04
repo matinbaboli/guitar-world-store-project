@@ -30,7 +30,7 @@ import  ProfileIcon from "../../public/profile-icon.svg?react"
 import  Heart from "../../public/heart.svg?react"
 
 
-export const smallNavHeight = 70
+export const smallNavHeight = 80
 export const bigNavHeight = 100
 
 const BadgeForCartIcon = ({children, smallScreen}) => {
@@ -54,11 +54,11 @@ const BadgeForCartIcon = ({children, smallScreen}) => {
 }
 
 
-const Navbar = ({windowWidth, fixed, navHeight}) => {
+const Navbar = ({fixed, navHeight}) => {
 const [open, setOpen] = useState(false)
 const ref = useRef()
 const wishlistLink = useRef()
-const {windowScrollPositionY, wishlistIconActivateAnimation} = useContext(context)
+const {windowScrollPositionY, wishlistIconActivateAnimation, windowWidth} = useContext(context)
 
 const currentNavHeight = windowWidth > 900 ? bigNavHeight : smallNavHeight
 
@@ -94,7 +94,7 @@ return <Box
         top: 0,
         zIndex: 5,
         width: "100%",
-        height: (fixed ? currentNavHeight - 20 : currentNavHeight) + "px",
+        height: ((fixed && windowWidth > 900) ? currentNavHeight - 20 : currentNavHeight) + "px",
         background: fixed ? "linear-gradient( to left, rgba(50, 50, 50, 1) 0%, rgba(80, 80, 80, 1) 100%)": darkBackgroundColor,
 
     }}>
@@ -144,10 +144,10 @@ return <Box
                     height: "100%"
                 }}
             >
-                <LinkModified to="Home" >
+                <LinkModified to="Home"  >
                     <Box
                     component="img"
-                    sx={{ height: {xs: 35, md: 50}, width: {xs: 100, md: 120}, transform: "translateY(-5px)" }}
+                    sx={{  width: {xs: 100, md: 120} }}
                     alt="Logo"
                     src={Logo}
                     />            
@@ -255,7 +255,7 @@ return <Box
                 </List>
                 <Divider variant="middle" sx={{bgcolor: "white"}}/>
                 <List>
-                {['Home', 'Catalog', 'About Us', 'Wishlist'].map((text) => (
+                {['Home', 'Catalog', 'About Us'].map((text) => (
                 <ListItem key={text} disablePadding>
                     <ListItemButton>
                         <LinkModified to={text}>

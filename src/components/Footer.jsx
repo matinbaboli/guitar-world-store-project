@@ -2,8 +2,12 @@ import React from "react"
 import {Box, Container, List, ListItem, ListItemButton, ListItemText, TextField, Button, Stack, Typography} from "@mui/material" 
 import { secondaryColor, primaryColorLight } from "../theme"
 import LinkModified from "./LinkModified.jsx"
+import { context } from "../contextApi"
 
-const Footer = ({windowWidth}) => {
+
+const Footer = () => {
+    const {windowWidth} = React.useContext(context)
+    
     return <Box color="white" sx={{
         position: "relative",
         background: secondaryColor,

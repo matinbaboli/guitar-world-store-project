@@ -2,9 +2,12 @@ import React, { Children } from "react"
 import { Container, Box } from "@mui/material"
 import {smallNavHeight, bigNavHeight} from "./Navbar"
 import {generalBackgroundColor} from "../theme"
+import {context} from "../contextApi.jsx"
 
 
-const SectionContainer = ({windowWidth, children, backgroundColor, hero}) => {
+const SectionContainer = ({children, backgroundColor, hero}) => {
+    const {windowWidth} = React.useContext(context)
+
     return <Box>
     <Box        
         display="flex"

@@ -11,8 +11,10 @@ import MinusIcon from "../../public/minus-icon.svg?react"
 
 const CartItem = ({props}) => {
     const {image, name, price, type, count, id} = props
-    const {shoppingCartItems, setShoppingCartItems, setStoredProductId} = useContext(context)
+    const {shoppingCartItems, setShoppingCartItems, setStoredProductId, windowWidth} = useContext(context)
     const [counter, setCounter] = useState(count || 0)
+
+    let modifiedName = name.substring(0, 8) + "..."
 
     function handleDelete() {
         let copyOfCartItems = [...shoppingCartItems]
@@ -44,6 +46,7 @@ const CartItem = ({props}) => {
                         <Box 
                         display="flex"
                         flexDirection="column"
+                        minWidth={{xs: "120px", sm: "140px"}}
                         sx={{
                             border: `2px solid ${secondaryColor}`,
                             borderRadius: "10px",
@@ -62,7 +65,7 @@ const CartItem = ({props}) => {
                                     backgroundColor: "white"
                                 }}
                                 
-                                >
+                            >
                             </Box>
                             <Box 
                             display="flex"
@@ -97,7 +100,7 @@ const CartItem = ({props}) => {
                             >
                             <Box pl="8px">
                             <Typography variant="h5" >
-                            {name}
+                            {windowWidth < 600 ? modifiedName: name}
                             </Typography>
                             <Typography variant="body1" marginBlock={{xs:"5px", md: "15px"}}>
                             Type: {type}
@@ -108,10 +111,7 @@ const CartItem = ({props}) => {
                             </Box>
                             <LinkModified to={`ProductDetails/${id}`}>
                                 <Button
-                                onClick={() => {
-                                    // localStorage.setItem("productId", id)
-                                    setStoredProductId(id)
-                                }}                             
+                                onClick={() => setStoredProductId(id)}                             
                                 sx={{
                                     color: secondaryColorLight
                                 }}>view product</Button>

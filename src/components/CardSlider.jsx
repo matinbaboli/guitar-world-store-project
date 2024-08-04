@@ -5,12 +5,14 @@ import RightArrow from "../../public/right-arrow-icon.svg?react"
 import LeftArrow from "../../public/left-arrow-icon.svg?react"
 import {primaryColor, primaryColorLight, secondaryColor, secondaryColorLight, primaryColorVeryLight, secondaryColorVeryLight} from "../theme"
 import data from "../data.json"
+import { context } from "../contextApi"
 
 
-const CardSlider = ({windowWidth, darkBackground, dataType}) => {
+const CardSlider = ({darkBackground, dataType}) => {
     const [slidercardsindexes, setSlidercardsindexes] = useState([1, 1, 2, 3, 4, 5, 6]);
     const [activeStep, setActiveStep] = useState(0);
     const [sliderDataFiltered , setSliderDataFiltered] = useState(data.slice(0, 8))
+    const {windowWidth} = React.useContext(context)
 
 
     

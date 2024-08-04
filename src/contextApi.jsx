@@ -33,10 +33,21 @@ const AppContext = ({children}) => {
     const [subTotalPrice, setSubTotalPrice] = usePersistantState(0, "subTotalPrice")
     const [windowScrollPositionY, setWindowScrollPositionY] = useState(window.scrollY)
     const [wishlistIconActivateAnimation, setWishlistIconActivateAnimation] = useState(false)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+
 
     useEffect(() => {
+    })
+    
+    
+    useEffect(() => {
+        window.addEventListener("resize", () => setWindowWidth(window.innerWidth))
         window.addEventListener("scroll", () => setWindowScrollPositionY(window.scrollY))
-        return () => window.removeEventListener("scroll", () => setWindowScrollPositionY(window.scrollY))
+        return () => {
+            window.removeEventListener("resize", () => setWindowWidth(window.innerWidth))
+            window.removeEventListener("scroll", () => setWindowScrollPositionY(window.scrollY))
+        }
     })
 
     return (
@@ -55,7 +66,9 @@ const AppContext = ({children}) => {
             wishlistItems,
             setWishlistItems,
             wishlistIconActivateAnimation,
-            setWishlistIconActivateAnimation
+            setWishlistIconActivateAnimation,
+            windowWidth,
+            setWindowWidth
             }}>
             {children}
         </context.Provider>

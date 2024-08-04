@@ -34,8 +34,8 @@ let initialTargetItem = {
 }
 
 
-const ProductDetails = ({windowWidth, }) => {
-    const {storedProductId, shoppingCartItems, setShoppingCartItems, wishlistItems, setWishlistItems, wishlistIconActivateAnimation, setWishlistIconActivateAnimation} = useContext(context)
+const ProductDetails = () => {
+    const {storedProductId, shoppingCartItems, setShoppingCartItems, wishlistItems, setWishlistItems, wishlistIconActivateAnimation, setWishlistIconActivateAnimation, windowWidth} = useContext(context)
     const [ratingValue, setRatingValue] = useState(2)
     const [targetItemFromData, setTargetItemFromData] = useState(initialTargetItem)
     const [counter, setCounter] = useState(1)
@@ -191,7 +191,6 @@ const ProductDetails = ({windowWidth, }) => {
                 </Box>
                 <Stack justifyContent="center" alignItems="center" mt="20px">
                     <Stack direction={windowWidth > 900 ? "row" : "column"} gap={2}>
-
                         <Box 
                             display="flex"
                             justifyContent="center"
@@ -274,11 +273,11 @@ const ProductDetails = ({windowWidth, }) => {
                 boxSizing="border-box"
 
             >
-                <Stack direction={{xs: "row", md: "column"}} justifyContent="space-between" alignItems={{xs:"center", md: "start"}} 
-                gap={{md: 3}}
+                <Stack direction={{xs: "column", md: "column"}} justifyContent="space-between" alignItems={{xs:"start", md: "start"}} 
+                gap={3}
                 width="100%"
                 >
-                    <Typography variant="h2" component="h1">
+                    <Typography variant="h3" component="h1">
                         {name}
                     </Typography>
                     <Typography variant="h4" component="h2" sx={{ color: primaryColor, letterSpacing: "3px"}}>
@@ -302,11 +301,13 @@ const ProductDetails = ({windowWidth, }) => {
                         {`(${rating})  `}
                         from 10 reviews
                     </Typography>
+                    {windowWidth > 900 && 
                     <TooltipModified placement="top" title={!isAddedToWishlist ? "Add To Wish List" : "Remove From Wish List"}>
                         <IconButton onClick={handleAddOrRemoveWishlist}>
                             {isAddedToWishlist ? <HeartFilled style={{fill: red[700]}}/> : <Heart style={{fill: red[200]}}/>}
                         </IconButton>
                     </TooltipModified>
+                    }
                 </Stack>
 
                 {windowWidth > 900 && 
@@ -324,16 +325,7 @@ const ProductDetails = ({windowWidth, }) => {
                     <Typography variant="body1">
                         {description}
                     </Typography>
-                </Box>   
-
-                {/* { windowWidth < 900 &&
-                <Stack alignItems="center" gap={2} mt="50px">
-                    <Button variant="contained">
-                        add to cart
-                    </Button>
-                </Stack> */
-                }
-                
+                </Box>                   
 
                 <Box 
                     display="flex"

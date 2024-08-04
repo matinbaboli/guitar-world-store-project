@@ -32,7 +32,7 @@ import RightArrow from "../../public/right-arrow-icon.svg?react"
 import LeftArrow from "../../public/left-arrow-icon.svg?react"
 import QuestionIcon from "../../public/question-icon.svg?react"
 
-
+// when reloading the page on routes other than the / , which is the primary and base route, we recieve a 404 message and it says not found
 
 
 let heroSectionSlides = [
@@ -54,10 +54,10 @@ const slideDuration = 2000
 const slideDurationHalf = slideDuration / 2
 
 
-const Homepage = ({windowWidth}) => {
+const Homepage = () => {
     const [heroSliderIndex, setHeroSliderIndex] = useState(0)
     const {backgroundGradientColor, title, img, type} = heroSectionSlides[heroSliderIndex]
-    const {setProductTypeFilter, setExtraFilter} = useContext(context)
+    const {setProductTypeFilter, setExtraFilter, windowWidth} = useContext(context)
 
     function handleIncrement(e) {
 
@@ -141,7 +141,7 @@ const Homepage = ({windowWidth}) => {
     
     
     return <>
-    <SectionContainer hero windowWidth={windowWidth}>            
+    <SectionContainer hero>            
         <style>
             {`
                 .fade-in-out {
@@ -299,7 +299,7 @@ const Homepage = ({windowWidth}) => {
             marginBlock="50px"
         >
             <Typography align="center" color="white" marginBlock="10px" variant="h2">Special Offers</Typography>
-            <CardSlider windowWidth={windowWidth} dataType="sale"/>
+            <CardSlider dataType="sale"/>
             <LinkModified to="Catalog">
                 <Button onClick={() => setExtraFilter("SpecialOffers")} variant="outlined" size="large" color="secondary">
                     all offers
@@ -308,68 +308,6 @@ const Homepage = ({windowWidth}) => {
         </Box>
     </SectionContainer>
 
-    {/* <SectionContainer backgroundColor={generalBackgroundColor}>
-        <Box 
-        position="absolute"
-        top="0"
-        bottom="0"
-        left="0"
-        right="0"
-        sx={{
-            background: `linear-gradient(to right, ${primaryColorLight} -10%, rgba(0, 0, 0, 0) 3% 97%, ${primaryColorLight} 120%)`
-        }}
-        >
-
-        </Box>
-        <Stack direction="row"
-        alignItems="center"
-        gap="30px">
-            <Diamond fill={primaryColor} style={{width: "80px",  }}/>
-            <Typography variant="h2">
-                Our Values
-            </Typography>
-        </Stack>
-        <Grid
-        container
-        direction="row"
-        rowSpacing={3}
-        columnSpacing={8}
-        justifyContent="center"
-        alignContent="center"
-        width="80%"
-        marginBlock="20px">
-            <Grid item>
-                <Value />
-            </Grid>
-            <Grid item>
-                <Value filled/>
-            </Grid>
-            {windowWidth > 900 ?
-            <Grid item>
-                <Value filled/>
-            </Grid>            
-            :
-            <Grid item>
-                <Value />
-            </Grid>
-            }
-            {windowWidth > 900 ?
-            <Grid item>
-                <Value />
-            </Grid>            
-            :
-            <Grid item>
-                <Value filled/>
-            </Grid>
-            }
-            <Grid item>
-                <Value />
-            </Grid>
-            <Grid item>
-                <Value filled/>
-            </Grid>
-        </Grid>
-    </SectionContainer> */}
 
 
     <SectionContainer backgroundColor="#FDE9E4">
@@ -470,7 +408,7 @@ const Homepage = ({windowWidth}) => {
             gap={5}
         >
             <Typography  color="white" mb="10px"  variant="h2">For Begginers</Typography>
-            <CardSlider windowWidth={windowWidth} darkBackground dataType="begginerFriendly"/>
+            <CardSlider darkBackground dataType="begginerFriendly"/>
             <LinkModified to="Catalog">
                 <Button onClick={() => setExtraFilter("ForBegginers")} variant="contained" size="large" color="secondary">
                     all suggestions

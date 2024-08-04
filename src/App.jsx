@@ -10,28 +10,20 @@ import AboutUs from "./pages/AboutUs"
 import Wishlist from "./pages/Wishlist"
 
 const App = () => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-
-
-    useEffect(() => {
-        window.addEventListener("resize", () => setWindowWidth(window.innerWidth))
-        return () => window.removeEventListener("resize", () => setWindowWidth(window.innerWidth))
-    })
 
 
     
     return (
     <BrowserRouter basename="/guitar-world-store-project/">
         <Routes>
-            <Route path="/" element={<Layout windowWidth={windowWidth}/>}>
-                <Route path="Home?" element={<Homepage windowWidth={windowWidth}/>}/>
-                <Route path=":page?/Catalog" element={<Catalog windowWidth={windowWidth}/>}/>
-                <Route path="Cart" element={<Cart windowWidth={windowWidth}/>}/>
-                <Route path=":page?/About Us" element={<AboutUs windowWidth={windowWidth}/>}/>
-                <Route path="Wishlist" element={<Wishlist windowWidth={windowWidth}/>}/>
-                <Route path=":page?/:page?/ProductDetails/:id" element={<ProductDetails windowWidth={windowWidth} />}/>
-                <Route path="Cart/Checkout" element={<Checkout windowWidth={windowWidth}/>}/>
+            <Route path="/" element={<Layout/>}>
+                <Route path="Home?" element={<Homepage/>}/>
+                <Route path=":page?/Catalog" element={<Catalog/>}/>
+                <Route path="Cart" element={<Cart/>}/>
+                <Route path=":page?/About Us" element={<AboutUs/>}/>
+                <Route path="Wishlist" element={<Wishlist/>}/>
+                <Route path=":page?/:page?/ProductDetails/:id" element={<ProductDetails/>}/>
+                <Route path="Cart/Checkout" element={<Checkout/>}/>
             </Route>
         </Routes>
     </BrowserRouter>
