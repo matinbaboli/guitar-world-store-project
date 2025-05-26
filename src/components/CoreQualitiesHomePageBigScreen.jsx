@@ -6,8 +6,8 @@ import {
 } from "@mui/material"
 import BinocularsIcon from "../../public/binoculars-icon.svg?react"
 import TargetIcon from "../../public/target-icon.svg?react"
-import {context} from "../contextApi"
-import { primaryColor, primaryColorLight, secondaryColor, secondaryColorLight } from "../theme"
+ 
+import { colors } from "../style/colors"
 
 const CoreQualitiesHomePageBigScreen = ({title}) => {
     const [coreQualityHovered, setCoreQualityHovered] = useState()
@@ -45,7 +45,7 @@ const CoreQualitiesHomePageBigScreen = ({title}) => {
                 overflow="hidden"
 
                 sx={{
-                    background: coreQualityHovered === "VISION" ? secondaryColorLight : primaryColorLight,
+                    background: coreQualityHovered === "VISION" ? colors.secondary : colors.primary,
                     color: "white",
                     boxSizing: "border-box",
                     transform: show ? "scaleX(1)": "scaleX(0)",

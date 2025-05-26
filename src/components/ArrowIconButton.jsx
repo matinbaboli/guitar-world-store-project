@@ -12,10 +12,10 @@ const ArrowIconButton = ({children, color, onClick, type}) => {
         onClick={onClick}
         sx={{
             backgroundColor: color,
-            width: "60px",
-            height: "50px",
-            borderRadius: "22px",            
-            // pr: "13px",
+            width: "56px",
+            height: "48px",
+            borderRadius: "16px",     
+            pl: type === "next" && "20px",
             "&:hover": {
                 backgroundColor: color,
                 filter: "brightness(80%)"

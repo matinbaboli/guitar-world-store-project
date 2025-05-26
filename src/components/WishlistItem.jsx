@@ -1,22 +1,36 @@
-import React from "react"
+import React, { useState } from "react"
 import {
     Box,
     Typography,
     Stack,
     Button,
+    lighten,
+    darken,
 
 } from "@mui/material"
-import { primaryColorVeryLight, secondaryColorLight } from "../theme"
 import { red } from "@mui/material/colors"
 import LinkModified from "./LinkModified"
-import {context} from "../contextApi"
+import { colors } from "../style/colors"
+import { useProductDetailsStore, useWishlistItemsStore } from "../store/usePersistantStateStore"
+import { MotionBox } from "./MotionComponents"
+import { AnimatePresence } from "framer-motion"
+
 
 const WishlistItem = ({data}) => {
     const {image, name, type, id} = data
-    const {setStoredProductId, wishlistItems, setWishlistItems} = React.useContext(context)
+    // const { wishlistItems, setWishlistItems} = React.useContext(context)
+    const wishlistItems = useWishlistItemsStore(state => state.wishlistItems)
+    const setWishlistItems = useWishlistItemsStore(state => state.setWishlistItems)
     const [isHovered, setIsHovered] = React.useState()
-
+    const setStoredProductId = useProductDetailsStore(state => state.setStoredProductId)
+    const [isExiting, setIsExiting] = useState(false);
     let modifiedName = name.substring(0, 15) + "..."
+
+    const handleRemove = () => {
+        setIsExiting(true);
+        console.log("trigger")
+    };
+
 
     function handleDelete() {
         let copiedWishlistItems = [...wishlistItems]
@@ -27,16 +41,24 @@ const WishlistItem = ({data}) => {
 
 
     return (
-        <Box 
+    <AnimatePresence>
+        <MotionBox 
+            initial={{ scale: 1, opacity: 1 }}
+            animate={isExiting && { scale: 0.93, opacity: 0 }}
+            transition={{
+                duration: 0.2
+            }}
+            onAnimationComplete={() => {
+                if (isExiting) handleDelete();
+            }}                
             display="flex"
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
             position="relative"
-            // border={`1px solid ${primaryColorVeryLight}`}
-            border="1px solid rgba(0, 0, 0, 0.9)"
+            border={`1px solid ${colors.secondary}`}
             width={{xs: "100%"}}
-            minWidth={{sm: "250px"}}
+            minWidth={{xs: "240px"}}
             paddingBottom="10px"
             borderRadius="10px"
             overflow="hidden"
@@ -45,13 +67,13 @@ const WishlistItem = ({data}) => {
             }}
             onMouseOver={() => setIsHovered(true)}
             onMouseLeave={() => {
-                setTimeout(() => setIsHovered(false), 300)
+                setTimeout(() => setIsHovered(false), 100)
                 
             }}
         >
             <Box 
                 width="100%"
-                height="490px"
+                height="440px"
                 sx={{
                     backgroundImage: `url(${image})`,
                     backgroundRepeat: "no-repeat",
@@ -74,53 +96,62 @@ const WishlistItem = ({data}) => {
             zIndex={1}
             pb={4}
             sx={{
-                background: "linear-gradient(to top, rgba(0, 0, 0, 0.9) -15%, rgba(0, 0, 0, 0.2) 160%)",
-                transform: `scaleY(${isHovered ? 1 : 0})`,
-                transformOrigin: "bottom",
-                transition: "transform 300ms ease-in-out",
+                background: lighten("rgba(166, 124, 82, 0.85)", 0.85),
+                // background: darken("rgba(85, 101, 119, 0.9)", 0.2),
+                opacity: isHovered ? 1: 0,
+                transition: "opacity 200ms ease-in-out",
+                color: colors.primary
             }}
             >
-                <Typography variant="h5" component="h2" mt="10px" mb="20px" color="white">
+                <Typography variant="h5" component="h2" mt="10px" mb="20px">
                     {name ? modifiedName : "Guitar"}
                 </Typography>
                 <Stack>
                     <Stack alignItems="center" mb="10px">
-                        <Typography variant="body1" letterSpacing="2px" color="#CBC8C8" mb="5px"> 
+                        <Typography variant="body1" letterSpacing="2px" mb="5px"> 
                             Type
                         </Typography>
-                        <Typography variant="body2" letterSpacing="2px" color="white"> 
+                        <Typography variant="body2" letterSpacing="2px" color={colors.accent}> 
                             {type}
                         </Typography>
                     </Stack>
                     <Stack alignItems="center" mb="10px">
-                        <Typography variant="body1" letterSpacing="2px" color="#CBC8C8" mb="5px"> 
+                        <Typography variant="body1" letterSpacing="2px" mb="5px"> 
                             Saved on
                         </Typography>
-                        <Typography variant="body2" letterSpacing="2px" color="white"> 
+                        <Typography variant="body2" letterSpacing="2px" color={colors.accent}> 
                             4/29/21
                         </Typography>
                     </Stack>
                 </Stack>
-                <Stack gap={1}>
-                    <LinkModified to={`ProductDetails/${id}`}>
-                        <Button onClick={() => setStoredProductId(id)} variant="text" size="medium" sx={{
+                <Stack gap={1.5}>
+                    <LinkModified to={`/product-details/${id}`}>
+                        <Button onClick={() => setStoredProductId(id)} variant="contained" size="small" sx={{
                             mt: "20px",
-                            color: secondaryColorLight,
+                            paddingInline: "20px"
+                            // color: colors.primary,
                             
                         }}>
                             view product
                         </Button>
                     </LinkModified>
-                    <Button onClick={handleDelete} variant="text" size="medium" sx={{
+                    <Button onClick={handleRemove} variant="contained" size="small" sx={{
                         mt: "0px",
-                        color: red[700],
+                        color: colors.accent,
+                        background: lighten(colors.accent, 0.8),
+                        "&:hover": {
+                            color: colors.mainbackground,
+                            background: lighten(colors.accent, 0.2),
+                        }
                         
                     }}>
                         remove
                     </Button>
                 </Stack>
             </Box>
-        </Box>
+        </MotionBox>
+    </AnimatePresence>
+
     )
 }
 
@@ -129,7 +160,6 @@ const WishlistItem = ({data}) => {
         //     flexDirection="column"
         //     alignItems="center"
         //     justifyContent="center"
-        //     // border={`1px solid ${primaryColorVeryLight}`}
         //     border="1px solid rgba(0, 0, 0, 0.9)"
         //     width={{xs: "70%"}}
         //     minWidth={{sm: "250px"}}
@@ -173,7 +203,6 @@ const WishlistItem = ({data}) => {
         //     <LinkModified to={`ProductDetails/${id}`}>
         //         <Button onClick={() => setStoredProductId(id)} variant="text" size="medium" sx={{
         //             mt: "20px",
-        //             color: secondaryColorLight,
                     
         //         }}>
         //             view product

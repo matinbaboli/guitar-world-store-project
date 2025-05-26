@@ -1,17 +1,14 @@
 import React from "react"
 import { Outlet, Link } from "react-router-dom"
-import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import ScrollToTop from "../components/ScrollToTop"
-import {context} from "../contextApi"
-
+import ScrollToTop from "../utils/ScrollToTop"
+import { BreakpointProvider } from "../BreakpointsProvider"
 
 const Layout = () => {
 
     return (
         <>
-            <Navbar/>
-            <Navbar fixed/>
+            <BreakpointProvider/>
             <Outlet/>
             <ScrollToTop/>
             <Footer/>

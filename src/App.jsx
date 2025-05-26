@@ -1,32 +1,45 @@
 import React, {useState, useEffect, useContext}  from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Layout from "./pages/Layout"
-import Homepage from "./pages/homepage"
+import Homepage from "./pages/homepage/homepage"
 import Catalog from "./pages/Catalog"
 import Cart from "./pages/Cart"
-import ProductDetails from "./pages/ProductDetails"
+import ProductDetails from "./pages/productDetails/ProductDetails"
 import Checkout from "./pages/Checkout"
 import AboutUs from "./pages/AboutUs"
 import Wishlist from "./pages/Wishlist"
+import { useWindowWidthStore } from "./store/useWindowWidthStore"
+import { useScrollPositionY } from "./store/useScrollPositionYStore"
 
 const App = () => {
+    const setWindowWidth = useWindowWidthStore(state => state.setWindowWidth)
+    const setWindowScrollPositionY = useScrollPositionY(state => state.setWindowScrollPositionY)
 
+    useEffect(() => {
+        window.addEventListener("resize", () => setWindowWidth(window.innerWidth))
+        window.addEventListener("scroll", () => setWindowScrollPositionY(window.scrollY))
 
-    
+        return () => {
+            window.removeEventListener("resize", () => setWindowWidth(window.innerWidth))
+            window.removeEventListener("scroll", () => setWindowScrollPositionY(window.scrollY))
+        }
+    })
+
     return (
-    <BrowserRouter basename="/guitar-world-store-project/">
+        <BrowserRouter basename="/guitar-world-store-project/">
         <Routes>
-            <Route path="/" element={<Layout/>}>
-                <Route path="Home?" element={<Homepage/>}/>
-                <Route path=":page?/Catalog" element={<Catalog/>}/>
-                <Route path="Cart" element={<Cart/>}/>
-                <Route path=":page?/About Us" element={<AboutUs/>}/>
-                <Route path="Wishlist" element={<Wishlist/>}/>
-                <Route path=":page?/:page?/ProductDetails/:id" element={<ProductDetails/>}/>
-                <Route path="Cart/Checkout" element={<Checkout/>}/>
+            <Route path="/" element={<Layout />}>
+            <Route index element={<Homepage />} />
+            <Route path="home" element={<Homepage />} />
+            <Route path="catalog" element={<Catalog />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="about-us" element={<AboutUs />} />
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="product-details/:id" element={<ProductDetails />} />
+            <Route path="cart/checkout" element={<Checkout />} />
             </Route>
         </Routes>
-    </BrowserRouter>
+        </BrowserRouter>
     )
 }
 

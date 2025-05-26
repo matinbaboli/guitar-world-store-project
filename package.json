@@ -12,11 +12,15 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@fontsource/roboto": "^5.2.5",
     "@mui/material": "^5.15.17",
+    "framer-motion": "^12.9.4",
+    "motion": "^12.11.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.1.11",
-    "vite-plugin-svgr": "^4.2.0"
+    "vite-plugin-svgr": "^4.2.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
